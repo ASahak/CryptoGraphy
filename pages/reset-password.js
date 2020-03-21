@@ -8,6 +8,11 @@ import Icon from "components/Icons/icon";
 import * as authService from "utils/auth-service";
 import {bodyLoading} from "components/shared/helpers/global-functions";
 import Link from "next/link";
+import { connect } from 'react-redux';
+import {
+    CHANGE_STATUS_IS_LOADING
+} from "../store/actions";
+
 
 function ResetForm () {
     const _timeout = 4000;
@@ -72,10 +77,10 @@ function ResetForm () {
     )
 }
 class ResetPassword extends React.Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            isLoading: true
+            isLoading: this.props.isLoading
         };
         bodyLoading(this.state.isLoading);
         authService.__isLogged().then(res => {
@@ -84,12 +89,12 @@ class ResetPassword extends React.Component{
             } else {
                 this.setState({
                     isLoading: false
-                }, () => bodyLoading(this.state.isLoading));
+                }, () => bodyLoading(this.state.isLoading, false));
             }
         })
     }
     componentDidMount() {
-        console.log(Router);
+        this.props.CHANGE_STATUS_IS_LOADING(false);
     }
 
     render () {
@@ -159,4 +164,15 @@ class ResetPassword extends React.Component{
         )
     }
 }
-export default React.memo(ResetPassword);
+const mapStateToProps = state => ({
+    isLoading: state.auth.isLoading
+});
+
+const mapDispatchToProps = {
+    CHANGE_STATUS_IS_LOADING
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(React.memo(ResetPassword));

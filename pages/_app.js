@@ -1,7 +1,8 @@
 import React from 'react';
 import App from 'next/app';
 import GlobalStyle from "components/shared/helpers/global-styles";
-
+import { Provider } from 'react-redux';
+import store from 'store';
 
 class AppWrapper extends App {
     constructor(props) {
@@ -13,7 +14,9 @@ class AppWrapper extends App {
         return (
             <>
                 <GlobalStyle />
-                <Component {...pageProps} {...initialProps} />
+                <Provider store={store}>
+                    <Component {...pageProps} {...initialProps} />
+                </Provider>
             </>
         )
     }

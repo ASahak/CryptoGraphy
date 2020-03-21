@@ -92,7 +92,8 @@ class ChatUsers extends React.Component {
                         width: calc(100% - 50px);
                     }
                     .user-messages-container .user-message-info .user-message-info_right {
-                        width: 50px;
+                        width: fit-content;
+                        white-space: nowrap;
                     }
                     .user-messages-container .user-message-info .user-message-info_right > span {
                         font-size: 13px;
