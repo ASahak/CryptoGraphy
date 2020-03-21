@@ -25,12 +25,12 @@ export default function withAuth(AuthComponent) {
                         this.setState({
                             isAuth: true,
                             isLoading: false
-                        }, () => bodyLoading(this.state.isLoading))
+                        }, () => bodyLoading(this.state.isLoading, this.state.isAuth))
                     }
                 } else {
                     this.setState({
                         isLoading: false
-                    }, () => bodyLoading(this.state.isLoading));
+                    }, () => bodyLoading(this.state.isLoading, this.state.isAuth));
                     Router.push('/login')
                 }
             })

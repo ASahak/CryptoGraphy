@@ -9,6 +9,10 @@ import Alert from 'components/shared/UI/Alert';
 import Router from "next/router";
 import * as authService from "utils/auth-service";
 import { bodyLoading } from 'components/shared/helpers/global-functions';
+import { connect } from 'react-redux';
+import {
+    CHANGE_STATUS_IS_LOADING
+} from 'store/actions';
 
 function LoginForm () {
     const _timeout = 4000;
@@ -90,7 +94,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: this.props.isLoading
         };
         bodyLoading(this.state.isLoading);
         authService.__isLogged().then(res => {
@@ -99,10 +103,14 @@ class Login extends React.Component {
             } else {
                 this.setState({
                     isLoading: false
-                }, () => bodyLoading(this.state.isLoading));
+                }, () => bodyLoading(this.state.isLoading, false));
             }
         })
     }
+    componentDidMount() {
+        this.props.CHANGE_STATUS_IS_LOADING(false);
+    }
+
     render() {
         if (this.state.isLoading) return '';
         return (
@@ -172,4 +180,15 @@ class Login extends React.Component {
     }
 }
 
-export default React.memo(Login);
+const mapStateToProps = state => ({
+    isLoading: state.auth.isLoading
+});
+
+const mapDispatchToProps = {
+    CHANGE_STATUS_IS_LOADING
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(React.memo(Login));
