@@ -8,10 +8,10 @@ import fire from "config/fire";
 import Alert from "components/shared/UI/Alert";
 import Router from 'next/router';
 import * as authService from "utils/auth-service";
-import { bodyLoading } from 'components/shared/helpers/global-functions';
+import { __bodyLoading } from 'components/shared/helpers/global-functions';
 import { connect } from 'react-redux';
 import {
-    CHANGE_STATUS_IS_LOADING
+    __CHANGE_STATUS_IS_LOADING
 } from "../store/actions";
 
 
@@ -28,12 +28,16 @@ function RegisterForm () {
             setLoadingRegister(false);
             const db = fire.firestore();
             db.collection('users').add({
+                id: '',
                 fullName: data.name,
                 email: data.email,
                 color: '#' + Math.random().toString(16).slice(2, 8),
                 messages: {}
             }).then(_ => {
-                Router.replace('/');
+                const docUsers = db.doc(`users/${_.id}`);
+                docUsers.update({'id': _.id}).then(() => {
+                    Router.replace('/');
+                })
             });
         }).catch(err => {
             setErrorMessage(err.message);
@@ -130,20 +134,20 @@ class Register extends React.Component {
         this.state = {
             isLoading: this.props.isLoading
         };
-        bodyLoading(this.state.isLoading);
+        __bodyLoading(this.state.isLoading);
         authService.__isLogged().then(res => {
             if (res) {
                 Router.push('/')
             } else {
                 this.setState({
                     isLoading: false
-                }, () => bodyLoading(this.state.isLoading, false));
+                }, () => __bodyLoading(this.state.isLoading, false));
             }
         })
     }
 
     componentDidMount() {
-        this.props.CHANGE_STATUS_IS_LOADING(false);
+        this.props.__CHANGE_STATUS_IS_LOADING(false);
     }
 
     render () {
@@ -220,7 +224,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    CHANGE_STATUS_IS_LOADING
+    __CHANGE_STATUS_IS_LOADING
 };
 
 export default connect(

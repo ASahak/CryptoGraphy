@@ -1,5 +1,6 @@
 import React from 'react';
 import UI_ELEMENTS from 'components/shared/UI';
+import Messages from "components/Messages";
 
 class ChatMessages extends React.Component {
     constructor(props) {
@@ -28,6 +29,7 @@ class ChatMessages extends React.Component {
                     }}
                     dataOptions={this._encryptData}
                 />
+                <Messages />
                 <style>{`
                     .chat-messages {
                         width: 70%;

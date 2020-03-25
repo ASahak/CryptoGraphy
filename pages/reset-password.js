@@ -10,7 +10,7 @@ import {bodyLoading} from "components/shared/helpers/global-functions";
 import Link from "next/link";
 import { connect } from 'react-redux';
 import {
-    CHANGE_STATUS_IS_LOADING
+    __CHANGE_STATUS_IS_LOADING
 } from "../store/actions";
 
 
@@ -94,7 +94,7 @@ class ResetPassword extends React.Component{
         })
     }
     componentDidMount() {
-        this.props.CHANGE_STATUS_IS_LOADING(false);
+        this.props.__CHANGE_STATUS_IS_LOADING(false);
     }
 
     render () {
@@ -169,7 +169,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    CHANGE_STATUS_IS_LOADING
+    __CHANGE_STATUS_IS_LOADING
 };
 
 export default connect(

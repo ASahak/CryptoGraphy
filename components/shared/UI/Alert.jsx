@@ -61,7 +61,7 @@ function Alert (props) {
         domElement
     )
 }
-Alert.defaulProps = {
+Alert.defaultProps = {
   timeout: 4000,
 };
 Alert.propTypes = {

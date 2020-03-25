@@ -1,11 +1,16 @@
 import rootReducer from 'store/reducers';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { rootSaga } from 'store/saga';
+import { _rootSaga } from 'store/saga';
 
 const composeEnhancers = compose;
 
 const state = {
+    chat: {
+        activeUser: null,
+        myChatUsers: null,
+        allChatUsers: null
+    },
     auth: {
         isLoading: true,
         isLogged: false
@@ -20,5 +25,5 @@ export function configureStore(initialState = {}) {
 }
 const store = configureStore(state);
 
-store.runSaga(rootSaga);
+store.runSaga(_rootSaga);
 export default store;

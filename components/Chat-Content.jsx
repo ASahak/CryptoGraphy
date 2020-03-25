@@ -11,7 +11,7 @@ class ChatContent extends React.Component {
             <div className="chat-content">
                 <ChatUsers />
                 <ChatMessages />
-                <style>{`
+                <style jsx>{`
                     .chat-content {
                         height: calc(100vh - 79px);
                         width: calc(100vw - 10vw);

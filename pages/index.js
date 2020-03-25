@@ -18,9 +18,6 @@ class Home extends React.Component{
           }
       }
     }
-    componentDidMount() {
-
-    }
 
     componentWillUnmount() {
         this.__bodyClass('remove');
