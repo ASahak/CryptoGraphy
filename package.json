@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/react-transition-group": "^4.2.4",
     "dotenv": "6.2.0",
     "dotenv-expand": "5.1.0",
     "dotenv-webpack": "^1.7.0",

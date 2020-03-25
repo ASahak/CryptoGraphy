@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Router from 'next/router'
 import Login from '../pages/login';
 import * as authService from './auth-service';
-import { bodyLoading } from 'components/shared/helpers/global-functions';
+import { __bodyLoading } from 'components/shared/helpers/global-functions';
 
 export default function withAuth(AuthComponent) {
 
@@ -13,7 +13,7 @@ export default function withAuth(AuthComponent) {
                 isAuth: false,
                 isLoading: true
             };
-            bodyLoading(this.state.isLoading);
+            __bodyLoading(this.state.isLoading);
             authService.__isLogged().then(res => {
                 if (res) {
                     if (Router.pathname === '/login' || Router.pathname === '/register') {
@@ -25,13 +25,15 @@ export default function withAuth(AuthComponent) {
                         this.setState({
                             isAuth: true,
                             isLoading: false
-                        }, () => bodyLoading(this.state.isLoading, this.state.isAuth))
+                        }, () => __bodyLoading(this.state.isLoading, this.state.isAuth))
                     }
                 } else {
                     this.setState({
                         isLoading: false
-                    }, () => bodyLoading(this.state.isLoading, this.state.isAuth));
-                    Router.push('/login')
+                    }, () => {
+                        __bodyLoading(this.state.isLoading, this.state.isAuth);
+                        Router.replace('/login')
+                    });
                 }
             })
         }

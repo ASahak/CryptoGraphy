@@ -8,10 +8,10 @@ import fire from 'config/fire';
 import Alert from 'components/shared/UI/Alert';
 import Router from "next/router";
 import * as authService from "utils/auth-service";
-import { bodyLoading } from 'components/shared/helpers/global-functions';
+import { __bodyLoading } from 'components/shared/helpers/global-functions';
 import { connect } from 'react-redux';
 import {
-    CHANGE_STATUS_IS_LOADING
+    __CHANGE_STATUS_IS_LOADING
 } from 'store/actions';
 
 function LoginForm () {
@@ -96,19 +96,19 @@ class Login extends React.Component {
         this.state = {
             isLoading: this.props.isLoading
         };
-        bodyLoading(this.state.isLoading);
+        __bodyLoading(this.props.isLoading, false);
         authService.__isLogged().then(res => {
             if (res) {
                 Router.push('/')
             } else {
                 this.setState({
                     isLoading: false
-                }, () => bodyLoading(this.state.isLoading, false));
+                }, () => __bodyLoading(this.state.isLoading, false));
             }
         })
     }
     componentDidMount() {
-        this.props.CHANGE_STATUS_IS_LOADING(false);
+        this.props.__CHANGE_STATUS_IS_LOADING(false);
     }
 
     render() {
@@ -185,7 +185,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    CHANGE_STATUS_IS_LOADING
+    __CHANGE_STATUS_IS_LOADING
 };
 
 export default connect(

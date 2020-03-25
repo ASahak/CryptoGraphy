@@ -1,3 +1,3 @@
 import { createSelector } from 'reselect';
 
-export const createSelectorAll = createSelector();
+export const createSelectorUsers = createSelector();

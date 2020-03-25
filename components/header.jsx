@@ -26,7 +26,7 @@ class Header extends React.Component {
 
     logOut () {
         fire.auth().signOut().then(_ => {
-            Router.replace('/login')
+            window.location = '/login';
         })
     }
 
