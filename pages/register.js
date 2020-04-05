@@ -8,12 +8,11 @@ import fire from "config/fire";
 import Alert from "components/shared/UI/Alert";
 import Router from 'next/router';
 import * as authService from "utils/auth-service";
-import { __bodyLoading } from 'components/shared/helpers/global-functions';
+import { __bodyLoading, __getRandomColor } from 'components/shared/helpers/global-functions';
 import { connect } from 'react-redux';
 import {
     __CHANGE_STATUS_IS_LOADING
 } from "../store/actions";
-
 
 
 function RegisterForm () {
@@ -31,7 +30,7 @@ function RegisterForm () {
                 id: '',
                 fullName: data.name,
                 email: data.email,
-                color: '#' + Math.random().toString(16).slice(2, 8),
+                color: __getRandomColor(),
                 messages: {}
             }).then(_ => {
                 const docUsers = db.doc(`users/${_.id}`);

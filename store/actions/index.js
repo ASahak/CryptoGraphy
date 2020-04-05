@@ -3,7 +3,10 @@ import {
     SET_IS_LOADING,
     MY_USERS,
     ALL_USERS,
-    ACTIVE_USER
+    ACTIVE_USER,
+    MY_DATA,
+    SET_USER_MESSAGES,
+    LOAD_MORE_MESSAGES
 } from '../types';
 
 export const __CHANGE_IS_LOGGED = (payload) => ({
@@ -27,5 +30,20 @@ export const __SET_MY_USERS_CHAT = (payload) => ({
 
 export const __SET_ACTIVE_USER = (payload) => ({
     type: ACTIVE_USER,
+    payload
+});
+
+export const __SET_MY_DATA = (payload) => ({
+    type: MY_DATA,
+    payload
+});
+
+export const __SET_ACTIVE_USER_MESSAGES = (payload) => ({
+    type: SET_USER_MESSAGES,
+    payload
+});
+
+export const __LOAD_MORE_MESSAGES = (payload) => ({
+    type: LOAD_MORE_MESSAGES,
     payload
 });

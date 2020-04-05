@@ -48,4 +48,57 @@ export default createGlobalStyle`
         display: flex;
         flex-direction: column;
     }
+    
+    .spinner {
+      margin: 0;
+      height: 16px;
+      width: 30px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .spinner > div {
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      display: inline-block;
+      -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+      animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+      background: rgba(0,0,0,.3);
+    }
+     
+    .spinner .bounce1 {
+      -webkit-animation-delay: -0.32s;
+      animation-delay: -0.32s;
+    }
+    
+    .spinner .bounce2 {
+      -webkit-animation-delay: -0.16s;
+      animation-delay: -0.16s;
+    }
+    
+    @-webkit-keyframes sk-bouncedelay {
+      0%,
+      80%,
+      100% {
+        -webkit-transform: scale(0)
+      }
+      40% {
+        -webkit-transform: scale(1.0)
+      }
+    }
+    
+    @keyframes sk-bouncedelay {
+      0%,
+      80%,
+      100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+      }
+      40% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+      }
+    }
 `;

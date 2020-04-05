@@ -14,3 +14,13 @@ export function __bodyLoading (isLoading, isLogged = false) {
         } else  _body.classList.add('still-loading')
     }
 }
+export function __getRandomColor() {
+    let letters = '012345'.split('');
+    let color = '#';
+    color += letters[Math.round(Math.random() * 5)];
+    letters = '0123456789ABCDEF'.split('');
+    for (let i = 0; i < 5; i++) {
+        color += letters[Math.round(Math.random() * 15)];
+    }
+    return color;
+}
