@@ -4,7 +4,10 @@ import * as moment from 'moment';
 import UI_ELEMENTS from "components/shared/UI";
 import Skeleton from 'components/Skeleton';
 import {
-    __GET_CHAT_USERS
+    __GET_CHAT_USERS,
+    __ADD_NEW_MESSAGE,
+    __CHANGE_IS_SEEN,
+    __GO_PRIVATE_CHAT,
 } from 'store/saga';
 import {
     __SET_ACTIVE_USER
@@ -16,7 +19,10 @@ import { Bus } from 'components/shared/helpers/Bus';
 
 const EveryUser = props => {
     return (
-      <div className={`user-messages-container ${props.isActiveUser === props.id ? 'active-user' : ''}`}>
+      <div
+          onClick={() => props.goPrivateChat(props.id)}
+          className={`user-messages-container ${props.isActiveUser === props.id ? 'active-user' : ''} 
+          ${props.dataMSG.letters.owner !== 'Me' && props.dataMSG.isSeen === false ? 'must-open-message' : ''}`}>
           <UI_ELEMENTS.UserImage
               firstName={props.dataMSG.fullName.split(' ')[0]}
               lastName={props.dataMSG.fullName.split(' ')[1] || ''}
@@ -24,11 +30,17 @@ const EveryUser = props => {
           />
           <div className="user-message-info">
               <div className="user-message-info_left">
-                  <h4>{props.dataMSG.fullName}</h4>
-                  <p>{props.dataMSG.message ? props.dataMSG.message : 'No messages yet'}</p>
+                  <h4>{props.dataMSG.fullName + (props.dataMSG.letters.owner !== 'Me' && props.dataMSG.isSeen === false ? ' ( 1 )' : '')}</h4>
+                  {props.dataMSG.isTyping === true ?
+                      <div className='spinner'>
+                          <div className='bounce1'></div>
+                          <div className='bounce2'></div>
+                          <div className='bounce3'></div>
+                      </div>:
+                      <p>{(props.dataMSG.letters && props.dataMSG.letters.message) ? props.dataMSG.letters.message : 'No messages yet'}</p>}
               </div>
               <div className="user-message-info_right">
-                  <span>{props.dataMSG.time ? moment(props.dataMSG.time).fromNow() : ''}</span>
+                  <span>{(props.dataMSG.letters && props.dataMSG.letters.time) ? moment(props.dataMSG.letters.time).fromNow() : ''}</span>
               </div>
           </div>
       </div>
@@ -47,17 +59,17 @@ class ChatUsers extends React.Component {
             commonRoom: false
         };
         this.__moveToCommonRoom = this.__moveToCommonRoom.bind(this);
-        // this.__startPrivateChat = this.__startPrivateChat.bind(this);
+        this.__goPrivateChat    = this.__goPrivateChat.bind(this);
         Bus.subscribe('startChat', (data) => this.__startPrivateChat(data))
     }
 
     componentDidMount() {
-        __GET_CHAT_USERS().next();
+        __GET_CHAT_USERS().next()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.usersList !== this.props.usersList) {
-           this.props.__SET_ACTIVE_USER(Object.keys(this.props.usersList)[0])
+            this.props.__SET_ACTIVE_USER(this.props.activeUser.id ? this.props.activeUser : this.props.usersList[0])
         }
     }
 
@@ -72,10 +84,21 @@ class ChatUsers extends React.Component {
         })
     }
 
-    __startPrivateChat ({id, data}) {
-        this.props.usersList[id] = {...data};
-        __GET_CHAT_USERS(this.props.usersList).next();
-        this.props.__SET_ACTIVE_USER(id);
+    __goPrivateChat (idUser) {
+        __GO_PRIVATE_CHAT(idUser, this.props.loggedUser.id).next();
+    }
+
+    async __startPrivateChat (data) {
+        const _reverseArray = [
+            {...data},
+            ...this.props.usersList
+        ];
+        await __ADD_NEW_MESSAGE(data.id, {
+            time: null,
+            message: ''
+        }).next();
+        __GET_CHAT_USERS(_reverseArray).next();
+        this.props.__SET_ACTIVE_USER(data);
         this.__moveToCommonRoom()
     }
 
@@ -85,40 +108,40 @@ class ChatUsers extends React.Component {
                 <h4>{!this.state.commonRoom ? 'Your Messages' : <a onClick={this.__moveToCommonRoom}><span className="lnr lnr-chevron-left"></span> Back</a>}</h4>
                 <div className="chat-room-wrapper">
                     {!this.state.commonRoom ? <div className="users-messages-container">
-                        {this.props.usersList === null && new Array(8).fill('').map((_, i) => {
+                        {this.props.usersList === null ? new Array(8).fill('').map((_, i) => {
                            return (
                                <div className="skeleton-container" key={i + Math.random().toString(16).slice(2, 6)} style={{opacity: (8 - i) * 0.09}}>
                                    <Skeleton
                                        width="35px"
                                        height="35px"
-                                       margin={[5, 10 , 0, 10]}
+                                       margin={['5px', '10px' , '0px', '10px']}
                                        radius="50%"
                                    />
                                    <div className="line-wrap">
                                        <Skeleton
                                            width="100%"
                                            height="12px"
-                                           margin={[5, 0 , 10, 0]}
+                                           margin={['5px', '0px' , '10px', '0px']}
                                            radius="0%"
                                        />
                                        <Skeleton
                                            width="100%"
                                            height="12px"
-                                           margin={[5, 0 , 10, 0]}
+                                           margin={['5px', '0px' , '10px', '0px']}
                                            radius="0%"
                                        />
                                    </div>
                                 </div>
                            )
-                        })}
-                        {this.props.usersList !== null && (Object.keys(this.props.usersList).length ? Object.keys(this.props.usersList).map(user => <EveryUser
-                            isActiveUser={this.props.activeUser}
-                            id={user}
-                            dataMSG={this.props.usersList[user]}
-                            key={user}
-                        /> ) : <NoChatUsers goToCommonRoom={() => this.__moveToCommonRoom} />)}
+                        }): this.props.usersList.length ? this.props.usersList.map(user => <EveryUser
+                            isActiveUser={this.props.activeUser.id}
+                            id={user.id}
+                            dataMSG={user}
+                            key={user.id}
+                            goPrivateChat={this.__goPrivateChat}
+                        /> ) : <NoChatUsers goToCommonRoom={() => this.__moveToCommonRoom} />}
                     </div>: <CommonRoom />}
-                    {!this.state.commonRoom && this.props.usersList !== null && Object.keys(this.props.usersList).length ?
+                    {!this.state.commonRoom && this.props.usersList !== null && this.props.usersList.length ?
                         <UI_ELEMENTS.Button
                             background="transparent"
                             color="#37415c"
@@ -168,7 +191,15 @@ class ChatUsers extends React.Component {
                         transition: .4s;
                         cursor: pointer;
                     }
-                    .users-messages-container .user-messages-container:hover, .users-messages-container .user-messages-container.active-user {
+                    .users-messages-container .user-messages-container.active-user {
+                        border-right: 2px solid #1ab898;
+                        background-color: #eeeeee;
+                    }
+                    .users-messages-container .must-open-message {
+                        background-color: #eeeeee;
+                        font-weight: 900;
+                    }
+                    .users-messages-container .user-messages-container:hover{
                         background-color: #eeeeee;
                     }
                     .user-messages-container .user-message-info {
@@ -178,7 +209,7 @@ class ChatUsers extends React.Component {
                         justify-content: space-between;
                     }
                     .user-messages-container .user-message-info .user-message-info_left {
-                        width: calc(100% - 50px);
+                        width: calc(100% - 90px);
                     }
                     .user-messages-container .user-message-info .user-message-info_right {
                         width: fit-content;
@@ -207,6 +238,7 @@ class ChatUsers extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    loggedUser: state.chat.loggedUser,
     usersList: state.chat.myChatUsers,
     activeUser: state.chat.activeUser
 });

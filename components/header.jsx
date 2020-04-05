@@ -1,27 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import fire from "config/fire";
-import Router from "next/router";
 import Icon from 'components/Icons/icon';
 import UI_ELEMENTS from 'components/shared/UI';
 
 class Header extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            user: null
-        }
-    }
-    componentDidMount() {
-        const db = fire.firestore();
-        db.collection('users').where("email", "==", fire.auth().currentUser.email)
-            .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    this.setState({
-                        user: doc.data()
-                    })
-                })
-            })
+    constructor(props) {
+        super(props);
     }
 
     logOut () {
@@ -37,11 +22,11 @@ class Header extends React.Component {
                     <img src="./assets/images/logo.png" alt="encrypt"/>
                     encrypt
                 </a>
-                {this.state.user && <div className="user-wrapper">
+                {this.props.user && <div className="user-wrapper">
                     <UI_ELEMENTS.UserImage
-                        firstName={this.state.user.fullName.split(' ')[0]}
-                        lastName={this.state.user.fullName.split(' ')[1] || ''}
-                        fill={this.state.user.color}
+                        firstName={this.props.user.fullName.split(' ')[0]}
+                        lastName={this.props.user.fullName.split(' ')[1] || ''}
+                        fill={this.props.user.color}
                     />
                     <span onClick={() => this.logOut()}>
                         <Icon name="logout"/>
@@ -82,4 +67,13 @@ class Header extends React.Component {
         )
     }
 }
+
+Header.defaultProps = {
+    user: {}
+};
+
+Header.propTypes = {
+    user: PropTypes.object
+};
+
 export default React.memo(Header);

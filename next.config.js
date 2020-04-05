@@ -28,6 +28,7 @@ module.exports = {
         config.resolve.alias['config'] = path.join(__dirname, 'config');
         config.resolve.alias['utils'] = path.join(__dirname, 'utils');
         config.resolve.alias['store'] = path.join(__dirname, 'store');
+        config.resolve.alias['hooks'] = path.join(__dirname, 'hooks');
         return config;
     }
 };

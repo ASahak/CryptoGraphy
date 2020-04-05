@@ -23,10 +23,12 @@ function EveryUser (props) {
                 <a
                     onClick={()=> Bus.dispatch('startChat', {
                         id: props.dataMSG.id,
-                        data: {
-                            color: props.dataMSG.color,
-                            fullName: props.dataMSG.fullName,
+                        color: props.dataMSG.color,
+                        fullName: props.dataMSG.fullName,
+                        isSender: true,
+                        letters: {
                             message: '',
+                            time: null
                         }
                     })}
                     className={fire.auth().currentUser.email === props.dataMSG.email ? 'disable-btn common-room-btn' : 'common-room-btn'}>{
@@ -44,8 +46,10 @@ const CommonRoom = props => {
         if (props.allChatUsers == null) {
             __GET_ALL_USERS().next();
         }
+        return () => {
+            __GET_ALL_USERS({}).next();
+        }
     }, []);
-
 
     return (
         <>
@@ -55,36 +59,36 @@ const CommonRoom = props => {
                         <Skeleton
                             width="35px"
                             height="35px"
-                            margin={[5, 10 , 0, 10]}
+                            margin={['5px', '10px', '0px', '10px']}
                             radius="50%"
                         />
                         <div className="line-wrap">
                             <Skeleton
                                 width="100%"
                                 height="12px"
-                                margin={[5, 0 , 10, 0]}
+                                margin={['5px', '0px', '10px', '0px']}
                                 radius="0%"
                             />
                             <Skeleton
                                 width="100%"
                                 height="12px"
-                                margin={[5, 0 , 10, 0]}
+                                margin={['5px', '0px', '10px', '0px']}
                                 radius="0%"
                             />
                         </div>
                     </div>
                 )
             })}
-            {props.usersList !== null && Object.keys(props.usersList).map(user => <EveryUser
-                dataMSG={props.usersList[user]}
-                key={user}
+            {props.usersList !== null && props.usersList.map(user => <EveryUser
+                dataMSG={user}
+                key={user.id}
             />)}
             <style jsx global>{`
                 .user-messages-container {
                     display: flex;
                     padding: 10px;
                     border-bottom: 1px solid #e3dede;
-                }   
+                }
                 .user-messages-container .user-chat-btn{
                     padding-left: 10px;
                     display: flex;

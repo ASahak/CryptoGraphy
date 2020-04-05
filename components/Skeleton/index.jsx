@@ -7,7 +7,7 @@ const Skeleton = props => {
         width: props.width,
         height: props.height,
         borderRadius: props.radius,
-        margin: props.margin[0] + 'px ' + props.margin[1] + 'px ' + props.margin[2] + 'px ' + props.margin[3] + 'px',
+        margin: props.margin[0] + ' ' + props.margin[1] + ' ' + props.margin[2] + ' ' + props.margin[3],
     });
 
     return (

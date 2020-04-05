@@ -1,3 +1,16 @@
 import { createSelector } from 'reselect';
 
-export const createSelectorUsers = createSelector();
+const _messagesData = state => state;
+const _everyPage = 15;
+
+export const __getUserMessages = createSelector(
+    _messagesData,
+    ({data, page}) => {
+        let returnedData = [];
+        for (let i = data.length - 1; i > data.length - (page * _everyPage) - 1; i--) {
+            if (!data[i]) break;
+            returnedData.unshift(data[i])
+        }
+        return returnedData;
+    }
+);
