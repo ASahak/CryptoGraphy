@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from "react-redux";
 import UI_ELEMENTS from "components/shared/UI";
 import * as moment from 'moment';
+import Icon from 'components/Icons/icon';
+import debounce from "lodash.debounce";
 import {
     __LOAD_MORE_MESSAGES
 } from 'store/actions';
@@ -11,39 +13,115 @@ class PrivateMessageContent extends React.PureComponent{
     constructor (props) {
         super(props);
         this.state = {
-            leftColor: this.props.activeUser && this.props.activeUser.color || '#0C4651',
-            rightColor: this.props.activeUser && this.props.loggedUser.color || '#1BBC9B',
+            leftColor: this.props.activeUser && this.props.activeUser?.color || '#0C4651',
+            rightColor: this.props.activeUser && this.props.loggedUser?.color || '#1BBC9B',
             scrollLoadingAllow: true,
-            messagesSelector: []
+            messagesSelector: [],
+            encryptIcon: true,
+            scrollPosition: null,
+            previousScrollHeight: 0,
+            previousScrollTop: 0,
+            loadingMessages: false,
         };
         this._messagesEnd       = null;
+        this._handleDomClick    = null;
         this.__scrollToBottom   = this.__scrollToBottom.bind(this);
         this.__handleScrollTop  = this.__handleScrollTop.bind(this);
+        this.__showEncryptPopUp = this.__showEncryptPopUp.bind(this);
+        this.__doEncryptType    = this.__doEncryptType.bind(this);
+        this.__hidePopUpEncrypt = this.__hidePopUpEncrypt.bind(this);
+        this.__generateRef      = this.__generateRef.bind(this);
+        this._scrollContent     = React.createRef();
     }
     __scrollToBottom (behavior) {
         this._messagesEnd.scrollIntoView({ behavior: (behavior ? 'smooth' : 'auto')});
     }
 
     __handleScrollTop (e) {
+
         if (this.state.scrollLoadingAllow && e.target.scrollTop < 50) {
-            this.props.__LOAD_MORE_MESSAGES(1);
             this.setState({
-                scrollLoadingAllow: false
+                previousScrollTop: this._scrollContent?.scrollTop,
+                previousScrollHeight: this._scrollContent?.scrollHeight,
+                scrollLoadingAllow: false,
+                loadingMessages: true,
+            }, () => {
+                setTimeout(() => {
+                    this.props.__LOAD_MORE_MESSAGES(1);
+                }, 1000);
+            })
+        } else {
+            this.setState({
+                scrollLoadingAllow: true
             })
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.activeUser.isTyping !== this.props.activeUser.isTyping) {
-            this.props.activeUser.isTyping && this.__scrollToBottom('behavior');
+    __generateRef (index) {
+        this['message-' + index] = React.createRef();
+        return this['message-' + index];
+    }
+
+    __showEncryptPopUp (evt, index, ref) {
+        const _currentSrc = evt.target.closest('p') && evt.target.closest('p');
+        if (document.body.querySelector('.opened-encryptPopUp') &&
+            document.body.querySelector('.opened-encryptPopUp') !== _currentSrc
+        ) {
+            document.body.querySelector('.opened-encryptPopUp').setAttribute('data-hint-encrypt', false);
+            document.body.querySelector('.opened-encryptPopUp').classList.remove('opened-encryptPopUp')
         }
-        if (prevProps.messagesPage !== this.props.messagesPage || prevProps.messages.length !== this.props.messages.length) {
-            if ((this.props.messagesPage - 1) * 15 <= this.props.messages.length) {
+        if (_currentSrc) {
+            const dataIcon = _currentSrc.getAttribute('data-hint-encrypt');
+            this.setState({
+                encryptIcon: JSON.parse(dataIcon)
+            });
+            _currentSrc.classList.toggle('opened-encryptPopUp');
+        }
+        setTimeout(() => {
+            addEventListener('click', this._handleDomClick = this.__hidePopUpEncrypt.bind(this, this[ref].current, index))
+        }, 0)
+    }
+
+    __hidePopUpEncrypt (ref, index, e) {
+        ref.innerText = this.state.messagesSelector[index].message;
+
+        removeEventListener('click', this._handleDomClick);
+        if (!e.target.closest('p[data-hint-encrypt]') && document.body.querySelector('.opened-encryptPopUp')) {
+            document.body.querySelector('.opened-encryptPopUp').setAttribute('data-hint-encrypt', false);
+            document.body.querySelector('.opened-encryptPopUp').classList.remove('opened-encryptPopUp')
+        }
+    }
+
+    __doEncryptType (e, ref, index) {
+        const _currentSrc = e.target.closest('p');
+        e.stopPropagation();
+
+        this.setState({
+            encryptIcon: !this.state.encryptIcon
+        }, () => {
+            _currentSrc.setAttribute('data-hint-encrypt', this.state.encryptIcon);
+            this[ref].current.innerText = this.state.messagesSelector[index][this.state.encryptIcon ? 'encryptedMsg' : 'decryptedMsg'];
+        })
+    }
+
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // if (prevProps.activeUser.isTyping !== this.props.activeUser.isTyping) {
+        //     this.props.activeUser.isTyping && this.__scrollToBottom('behavior');
+        // }
+        if ((prevProps.messagesPage !== this.props.messagesPage || prevProps.messages.length !== this.props.messages.length)) {
+            if ((this.props.messagesPage - 1) * 15 <= this.props.messages.length ) {
                 this.setState({
                     scrollLoadingAllow: true,
+                    loadingMessages: false,
                     messagesSelector: __getUserMessages({data: this.props.messages, page: this.props.messagesPage})
                 }, () => {
-                    this.__scrollToBottom('behavior');
+                    if (prevProps.messages.length !== this.props.messages.length) {
+                        this.__scrollToBottom('behavior');
+                    } else {
+                        this._scrollContent.scrollTo(0, (this._scrollContent.scrollHeight -
+                            this.state.previousScrollHeight + this.state.previousScrollTop - 45));
+                    }
                 });
             } else {
                 this.props.__LOAD_MORE_MESSAGES(-1);
@@ -55,6 +133,9 @@ class PrivateMessageContent extends React.PureComponent{
         this.setState({
             messagesSelector: __getUserMessages({data: this.props.messages, page: this.props.messagesPage})
         }, () => {
+            this._scrollContent.onscroll = debounce((e) => {
+                this.__handleScrollTop(e)
+            }, 100);
             this.__scrollToBottom();
         });
     }
@@ -69,7 +150,8 @@ class PrivateMessageContent extends React.PureComponent{
     render () {
         return (
             <>
-                <div className="messages-content" onScroll={(e) => this.__handleScrollTop(e)}>
+                <div className="messages-content" ref={(el) => this._scrollContent = el}>
+                    {this.state.loadingMessages && <div className="sbl-circ"></div>}
                     {this.state.messagesSelector.map((message, index) => {
                         const _isOwner = message.owner === 'Me';
                         const _dataMSG = _isOwner ? this.props.loggedUser : this.props.activeUser;
@@ -80,8 +162,15 @@ class PrivateMessageContent extends React.PureComponent{
                                     lastName={_dataMSG.fullName.split(' ')[1] || ''}
                                     fill={_dataMSG.color}
                                 />
-                                <div className="message-time">
-                                    <p>{message.message}</p>
+                                <div className="message-time" data-message-type={message.encryptType} data-message-key={message.key}>
+                                    <p onClick={(e) => this.__showEncryptPopUp(e, index, 'message-' + index)} data-hint-encrypt={false}>
+                                        <span className="encryptPopUp"
+                                              onClick={(e) => this.__doEncryptType(e,'message-' + index, index)}>
+                                            {this.state.encryptIcon ? <Icon name="unlocked" /> :
+                                            <Icon name="locked" />}
+                                        </span>
+                                        <span ref={this.__generateRef(index)}>{message.message}</span>
+                                    </p>
                                     <span>{moment(+message.time).format('lll')}</span>
                                     {this.props.activeUser.letters && this.props.activeUser.letters.owner === 'Me' && index === this.state.messagesSelector.length - 1 ? this.props.activeUser.isSeen ?
                                         <div className="status-message">Seen</div>: <div className="status-message">Delivered</div> : ''}
@@ -89,17 +178,37 @@ class PrivateMessageContent extends React.PureComponent{
                             </div>
                         )
                     })}
-                    {this.props.activeUser.isTyping && <div className="is-typing-wrap">
-                        {this.FN + this.LN + ' is typing '}
-                        <div className='spinner'>
-                            <div className='bounce1'></div>
-                            <div className='bounce2'></div>
-                            <div className='bounce3'></div>
-                        </div>
-                    </div>}
                     <div ref={(el) => { this._messagesEnd = el }}>{/*Scroll Into View*/}</div>
                 </div>
-                <style jsx>{`
+                {this.props.activeUser.isTyping && <div className="is-typing-wrap">
+                    {this.FN + this.LN + ' is typing '}
+                    <div className='spinner'>
+                        <div className='bounce1'></div>
+                        <div className='bounce2'></div>
+                        <div className='bounce3'></div>
+                    </div>
+                </div>}
+                <style jsx global>{`
+                    .sbl-circ {
+                      height: 35px;
+                      width: 35px;
+                      color: #5a5a5a;
+                      position: relative;
+                      display: block;
+                      border: 5px solid;
+                      border-radius: 50%;
+                      border-top-color: transparent;
+                      animation: rotate 1s linear infinite; 
+                      margin: 5px auto;
+                    }
+
+                    @keyframes rotate {
+                      0% {
+                        transform: rotate(0); }
+                      100% {
+                        transform: rotate(360deg); } 
+                    }
+                        
                     .messages-content {
                         height: 100%;
                         overflow-x: hidden;
@@ -172,8 +281,41 @@ class PrivateMessageContent extends React.PureComponent{
                         white-space: nowrap;
                         border-radius: 4px;
                     }
+                   
+                    .content-right_owner .message-time > p .encryptPopUp,
+                    .content-left_owner .message-time > p .encryptPopUp{
+                        position: absolute;
+                        height: 25px;
+                        display: none;
+                        width: 25px;
+                        padding: 2px;
+                        bottom: 0;
+                        top: 0;
+                        margin: auto;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        
+                    }
+                    .content-right_owner .message-time > p .encryptPopUp {
+                        left: -30px;
+                    }
+                    .content-left_owner .message-time > p .encryptPopUp{
+                        right: -30px;
+                    }
+                    
+                    .opened-encryptPopUp {
+                        background-color: #e7e7e7 !important;
+                        color: #000 !important;
+                    } 
+                    .opened-encryptPopUp:before {
+                        border-left-color: #e7e7e7 !important;
+                    }
+                    .opened-encryptPopUp .encryptPopUp{
+                        display: block !important;
+                    }
                     .content-right_owner .message-time > p,
                     .content-left_owner .message-time > p {
+                        cursor: pointer;
                         text-align:left;
                         margin: 0 0 5px 0;
                         display: inline-block;
@@ -182,6 +324,7 @@ class PrivateMessageContent extends React.PureComponent{
                         font-size: 13px;
                         border-radius: 5px;
                         position: relative;
+                        word-break: break-all;
                     }
                     .content-right_owner .message-time > p, .content-right_owner .message-time > span {
                         background-color: ${this.state.rightColor};
@@ -230,7 +373,6 @@ class PrivateMessageContent extends React.PureComponent{
        )
     }
 }
-
 
 const mapStateToProps = state => ({
     loggedUser: state.chat.loggedUser,

@@ -12,7 +12,7 @@ class Select extends React.Component {
     }
 
     render () {
-        const option = this.props.dataOptions.map(option => (<option key={option.value} defaultValue={option.value}>{option.name}</option>));
+        const option = this.props.dataOptions.map(option => (<option key={option.value} value={option.value}>{option.name}</option>));
         return (
             <>
                 <select defaultValue={'rsa'} required style={this.props.style} onChange={this.selectChange}>

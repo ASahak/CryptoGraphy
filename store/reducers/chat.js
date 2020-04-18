@@ -4,11 +4,25 @@ import {
     ACTIVE_USER,
     MY_DATA,
     SET_USER_MESSAGES,
-    LOAD_MORE_MESSAGES
+    LOAD_MORE_MESSAGES,
+    STATUS_MODAL,
+    SET_ENCRYPT_DATA
 } from '../types';
 
 const chat = (state = {}, action) => {
     switch (action.type) {
+        case SET_ENCRYPT_DATA:
+            return {...state, encryptData: {...state.encryptData,
+                    ...(() => {
+                        let makeObj ={};
+                        if (action.payload instanceof Array) {
+                            action.payload.map(obj => makeObj[obj.type] = obj.value)
+                        } else makeObj[action.payload.type] = action.payload.value;
+                        return makeObj;
+                    })(),
+            }};
+        case STATUS_MODAL:
+            return {...state, isShowModal: !state.isShowModal};
         case LOAD_MORE_MESSAGES:
             return {...state, messagesPage: state.messagesPage += action.payload};
         case SET_USER_MESSAGES:
@@ -23,7 +37,7 @@ const chat = (state = {}, action) => {
             });
             return {...state, allChatUsers: action.payload};
         case ACTIVE_USER:
-            return {...state, activeUser: action.payload};
+            return {...state, activeUser: action.payload || {}};
         default:
             return state;
     }

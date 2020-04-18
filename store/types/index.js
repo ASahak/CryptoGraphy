@@ -6,3 +6,5 @@ export const ACTIVE_USER = 'ACTIVE_USER';
 export const MY_DATA = 'MY_DATA';
 export const SET_USER_MESSAGES = 'SET_USER_MESSAGES';
 export const LOAD_MORE_MESSAGES = 'LOAD_MORE_MESSAGES';
+export const STATUS_MODAL = 'STATUS_MODAL';
+export const SET_ENCRYPT_DATA = 'SET_ENCRYPT_DATA';

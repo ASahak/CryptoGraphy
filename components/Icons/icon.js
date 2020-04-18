@@ -6,7 +6,10 @@ import {
     Loading,
     Success,
     Error,
-    Logout
+    Logout,
+    Modal,
+    Unlocked,
+    Locked,
 } from 'components/Icons';
 
 const iconTypes = {
@@ -15,7 +18,10 @@ const iconTypes = {
     loading: Loading,
     error: Error,
     success: Success,
-    logout: Logout
+    logout: Logout,
+    modal: Modal,
+    unlocked: Unlocked,
+    locked: Locked,
 };
 
 const IconComponent = ({ name, ...props }) => {

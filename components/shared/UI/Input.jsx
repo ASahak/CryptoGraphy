@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 
 const Input = (props) => {
+
     const styleDiv = {
         ...(props.label && {
             display: props.fullWidth ? 'flex' : 'inline-flex',
@@ -11,20 +12,58 @@ const Input = (props) => {
             display: props.fullWidth ? 'block' : 'inline-block'
         })
     };
+
+
+    useEffect(() => {
+        if (props.refBind.current) {
+            props.refBind.current.value = props.value
+        }
+    }, [props.value]);
+
+    useEffect(() => {
+        if (props.refBind.current) {
+            if (props.attr.length) {
+                props.attr.map(attr => {
+                    props.refBind.current.setAttribute(attr.name, attr.value)
+                })
+            }
+        }
+    }, [props.attr]);
+
+    useEffect(() => {
+        if (props.refBind.current) {
+            if (props.attr.length) {
+                props.attr.map(attr => {
+                    props.refBind.current.setAttribute(attr.name, attr.value)
+                })
+            }
+            for (let event = 0; event< props.events.length; event++) {
+                props.refBind.current.addEventListener(
+                    props.events[event],
+                    props['on' + props.events[event].replace(props.events[event].charAt(0), props.events[event].charAt(0).toUpperCase())]);
+            }
+        }
+        return () => {
+            if (props.refBind.current) {
+                for (let event = 0; event< props.events.length; event++) {
+                    props.refBind.current.removeEventListener(
+                        props.events[event],
+                        props['on' + props.events[event].replace(props.events[event].charAt(0), props.events[event].charAt(0).toUpperCase())]);
+                }
+            }
+        }
+    }, []);
     return (
         <div style={styleDiv} className={`input-wrap ${props.errors ? 'error-field' : ''}`}>
             {props.label ? <label>{props.label}</label> : null}
-            {props.placeholder ? <input
+            <input
                 name={props.name}
                 className={'input-' + props.size}
                 ref={props.refBind}
                 type={props.type}
-                placeholder={props.placeholder} /> : <input
-                ref={props.refBind}
-                name={props.name}
-                className={'input-' + props.size}
-                type={props.type} />
-            }
+                id={props.id}
+                disabled={props.disabled}
+                placeholder={props.placeholder || ''} />
             {props.errors && <span className="error-line">{props.errors}</span>}
             <style jsx>{`
                 .input-wrap label {
@@ -42,6 +81,9 @@ const Input = (props) => {
                     transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
                     position: relative;
                     z-index: 2;
+                }
+                .input-wrap input:disabled {
+                    background-color: #e7e7e7;
                 }
                 .input-wrap .error-line {
                     position: absolute;
@@ -70,16 +112,26 @@ const Input = (props) => {
 Input.defaultProps = {
     size: 'md',
     type: 'text',
-    fullWidth: false
+    fullWidth: false,
+    events: [],
+    attr: [],
 };
 Input.propTypes = {
   fullWidth: PropTypes.bool,
   size: PropTypes.string,
+  id: PropTypes.string,
   refBind: PropTypes.any,
   name: PropTypes.string,
   label: PropTypes.string,
   type: PropTypes.string,
   errors: PropTypes.string,
+  disabled: PropTypes.bool,
+  events: PropTypes.array,
+  attr: PropTypes.array,
+  value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+  ]),
   placeholder: PropTypes.string,
 };
 export default Input;

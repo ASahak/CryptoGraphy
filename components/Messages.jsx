@@ -7,9 +7,23 @@ import {
     __ADD_FRIEND_MESSAGE,
     __IS_TYPING_TO_ACTIVE_USER
 } from 'store/saga';
+import {
+    __SET_ENCRYPT_DATA
+} from 'store/actions';
 import TextAreaMessage from 'components/elements/TextAreaMessage';
 import Skeleton from "./Skeleton";
 import PrivateMessageContent from "components/elements/PrivateMessageContent";
+import { Modal } from 'components/shared/UI/Modal';
+import UI_ELEMENTS from "./shared/UI";
+import {
+    Vigenere,
+    RSA,
+    Caesar,
+    Playfair,
+    Vernam,
+    Substitution,
+} from 'libraries';
+
 
 class Messages extends React.Component {
     constructor (props) {
@@ -18,10 +32,21 @@ class Messages extends React.Component {
             startMessageNotify: '',
             skeletonLoading: true,
             noChatUser: false,
-            activeUserData: {}
+            activeUserData: {},
+            showModal: false,
+            beforeClose: false,
+            sendMessage: '',
+            modalData: {
+                yourMessage: '',
+                encryptText: '',
+                warningMsg: '',
+            }
         };
-        this.__sendMessage        = this.__sendMessage.bind(this);
-        this.__isTyping           = this.__isTyping.bind(this);
+        this.__sendMessage         = this.__sendMessage.bind(this);
+        this.__isTyping            = this.__isTyping.bind(this);
+        this.__handleSuccess       = this.__handleSuccess.bind(this);
+        this.__closeModal          = this.__closeModal.bind(this);
+        this.__handleSubmitMessage = this.__handleSubmitMessage.bind(this);
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -78,17 +103,131 @@ class Messages extends React.Component {
         __IS_TYPING_TO_ACTIVE_USER(hint, this.props.activeUser, this.props.loggedUser.id).next()
     }
 
-    async __sendMessage (value) {
+    __handleSuccess () {
+        this.setState({
+            beforeClose: true
+        });
+    }
+
+    __closeModal () {
+        this.setState({
+            beforeClose: false,
+            showModal: false
+        }, () => {
+            if (this.state.modalData.encryptText) this.__handleSubmitMessage(this.state.sendMessage, this.state.modalData.encryptText, this.state.modalData.decryptText);
+        });
+    }
+
+    async __handleSubmitMessage (value, encryptedMsg, decryptMsg) {
         const messageData = {
             time: new Date().getTime(),
-            message: value
+            message: value,
+            encryptedMsg: encryptedMsg,
+            decryptedMsg: decryptMsg,
+            key: this.props.encryptData?.key,
+            encryptType: this.props.encryptData.type
         };
+
         await __ADD_FRIEND_MESSAGE({friendId: this.props.activeUser, loggedUser: this.props.loggedUser}, {...messageData, owner: this.props.loggedUser.id}).next();
         await __ADD_NEW_MESSAGE(this.props.activeUser, {
             ...messageData,
             owner: 'Me'
         }).next();
-        __GET_CHAT_USERS().next()
+        __GET_CHAT_USERS().next();
+        this.setState({
+            startMessageNotify: ''
+        });
+    }
+
+    __encryptCommon (value, key, type, callback = () => {}) {
+        let sendMSG = {}
+;        switch (type) {
+            case 'vigenere':
+                const encryptedMsgV = Vigenere.doCryptVigenere(false, value, key, (msg) => {
+                    callback(msg);
+                    this.props.__SET_ENCRYPT_DATA({type: 'warning', value: true});
+                });
+                return sendMSG = {
+                    encryptedMSG: encryptedMsgV,
+                    decryptedMsg: Vigenere.doCryptVigenere(true, encryptedMsgV, key, (msg) => {
+                        callback(msg);
+                        this.props.__SET_ENCRYPT_DATA({type: 'warning', value: true});
+                    }),
+                };
+            case 'substitution' :
+                const encryptedMsgS = Substitution(value);
+                return sendMSG = {
+                    encryptedMSG: encryptedMsgS.encrypt,
+                    decryptedMsg: encryptedMsgS.decrypt
+                };
+            case 'rsa' :
+                // Message
+                const message = value;
+
+                // Generate RSA keys
+                const keys = RSA.generate(key);
+
+                const encoded_message = RSA.encode(message);
+                const encrypted_message = RSA.encrypt(encoded_message, keys.n, keys.e);
+                const decrypted_message = RSA.decrypt(encrypted_message, keys.d, keys.n);
+                const decoded_message = RSA.decode(decrypted_message);
+
+                return sendMSG = {
+                    encryptedMSG: encoded_message.toString(),
+                    decryptedMsg: decoded_message
+                };
+            case 'caesar':
+                const encryptedMsgC = Caesar.doCrypt(false, value, key, (msg) => {
+                    callback(msg);
+                });
+                return sendMSG = {
+                    encryptedMSG: encryptedMsgC,
+                    decryptedMsg: Caesar.doCrypt(true, encryptedMsgC, key, (msg) => {
+                        callback(msg);
+                    })
+                };
+            case 'playfair':
+                return sendMSG = {
+                    encryptedMSG: Playfair.doCipher(value, key, (msg) => {
+                        callback(msg);
+                    }),
+                    decryptedMsg: Playfair.deCodeCipher(value, key)
+                };
+            case 'vernam':
+                let _keyE = '';
+                const encryptedMsgVer = Vernam.doEncrypt(value, (_key) => {
+                    _keyE = _key;
+                    this.props.__SET_ENCRYPT_DATA({type: 'key', value: _key})
+                });
+
+                return sendMSG = {
+                    encryptedMSG: encryptedMsgVer,
+                    decryptedMsg: Vernam.doDecrypt(value, _keyE)
+                };
+            default : break;
+        }
+    }
+
+    __sendMessage (value) {
+        let warning = '';
+        this.setState({
+            sendMessage: value
+        }, () => {
+            const encryptMsg = this.__encryptCommon.call(this, value, this.props.encryptData?.key, this.props.encryptData.type, (msg) => {
+                warning = msg;
+            });
+            if (this.props.isShowModal) {
+                this.setState({
+                    modalData: {
+                        yourMessage: value,
+                        ...(warning && {warningMsg: warning}),
+                        ...(encryptMsg.encryptedMSG && {encryptText: encryptMsg.encryptedMSG}),
+                        ...(encryptMsg.decryptedMsg && {decryptText: encryptMsg.decryptedMsg}),
+                    },
+                    showModal: true
+                });
+            } else if (encryptMsg.encryptedMSG && encryptMsg.decryptedMsg) this.__handleSubmitMessage(value, encryptMsg.encryptedMSG, encryptMsg.decryptedMsg);
+        });
     }
 
     render () {
@@ -135,7 +274,42 @@ class Messages extends React.Component {
                     <PrivateMessageContent />
                 }
                 {!this.state.skeletonLoading && <TextAreaMessage isTyping={this.__isTyping} sendMessage={this.__sendMessage}/>}
+
+                <Modal
+                    show={this.state.showModal}
+                    beforeClose={this.state.beforeClose}
+                    close={this.__closeModal}>
+                    <div className="scroll-content">
+                        <h2>Please confirm message</h2>
+                        <h4>Your included text</h4>
+                        <p className="message-p">{this.state.modalData.yourMessage}</p>
+                        <h4>Encrypted text</h4>
+                        {this.state.modalData.warningMsg ? <p className="warning-message">{this.state.modalData.warningMsg}</p>:
+                            <p className="message-p">{this.state.modalData.encryptText}</p>
+                        }
+                    </div>
+                    <UI_ELEMENTS.Button
+                        background="#37415c"
+                        color="#fff"
+                        fontSize={11}
+                        type="button"
+                        text={'Send'}
+                        width={100}
+                        margin={['20px', '0', '0', 'auto']}
+                        onClick={this.__handleSuccess}
+                        size="sm"/>
+                </Modal>
                 <style jsx >{`
+                    .scroll-content {
+                        max-height: 70vh;
+                        overflow-x: hidden;
+                    }
+                    .message-p {
+                        word-break: break-all;
+                    }
+                    .warning-message {
+                        color: #ffa100;
+                    }
                     .skeleton-container-messages .line-wrap {
                         width: calc(100% - 70px);   
                         margin-bottom: 10px;                 
@@ -179,9 +353,12 @@ const mapStateToProps = state => ({
     loggedUser: state.chat.loggedUser,
     activeUser: state.chat.activeUser.id,
     usersList: state.chat.myChatUsers,
+    isShowModal: state.chat.isShowModal,
+    encryptData: state.chat.encryptData
 });
 
 const mapDispatchToProps = {
+    __SET_ENCRYPT_DATA
 };
 
 export default connect(

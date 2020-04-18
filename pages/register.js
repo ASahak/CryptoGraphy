@@ -31,7 +31,7 @@ function RegisterForm () {
                 fullName: data.name,
                 email: data.email,
                 color: __getRandomColor(),
-                messages: {}
+                messages: []
             }).then(_ => {
                 const docUsers = db.doc(`users/${_.id}`);
                 docUsers.update({'id': _.id}).then(() => {

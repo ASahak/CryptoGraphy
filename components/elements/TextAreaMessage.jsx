@@ -48,6 +48,7 @@ class TextAreaMessage extends React.PureComponent {
         }
         if (evt.key === 'Enter') {
             this.state.messageValue !== '' && this.props.sendMessage(this.state.messageValue);
+            this.messageArea.current.blur();
             this.setState({
                 messageValue: ''
             }, () => {

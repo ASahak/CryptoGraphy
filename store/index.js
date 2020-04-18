@@ -7,12 +7,19 @@ const composeEnhancers = compose;
 
 const state = {
     chat: {
+        isShowModal: true,
         loggedUser: null,
         activeUser: {},
         myChatUsers: null,
         allChatUsers: null,
         activeUserMessages: [],
-        messagesPage: 1
+        messagesPage: 1,
+        encryptData: {
+            disabled: false,
+            key: '',
+            type: '',
+            warning: false
+        }
     },
     auth: {
         isLoading: true,

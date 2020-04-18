@@ -58,8 +58,15 @@ class Home extends React.Component{
                     <Header user={this.state.user}/>
                     <ChatContent />
                 </main>
+                <div id="modal-root"></div>
 
                 <style jsx>{`
+                    #modal-root {
+                        position:absolute;
+                        z-index: 999999;
+                        top: 0;
+                        left: 0;
+                    }
               `}</style>
               </div>
           )

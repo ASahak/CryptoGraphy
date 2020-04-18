@@ -24,6 +24,9 @@ function EveryUser (props) {
                     onClick={()=> Bus.dispatch('startChat', {
                         id: props.dataMSG.id,
                         color: props.dataMSG.color,
+                        isSeen: true,
+                        isTyping: false,
+                        countMessagesDelivered: 0,
                         fullName: props.dataMSG.fullName,
                         isSender: true,
                         letters: {

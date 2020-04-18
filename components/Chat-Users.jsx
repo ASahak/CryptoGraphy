@@ -6,7 +6,6 @@ import Skeleton from 'components/Skeleton';
 import {
     __GET_CHAT_USERS,
     __ADD_NEW_MESSAGE,
-    __CHANGE_IS_SEEN,
     __GO_PRIVATE_CHAT,
 } from 'store/saga';
 import {
@@ -30,7 +29,7 @@ const EveryUser = props => {
           />
           <div className="user-message-info">
               <div className="user-message-info_left">
-                  <h4>{props.dataMSG.fullName + (props.dataMSG.letters.owner !== 'Me' && props.dataMSG.isSeen === false ? ' ( 1 )' : '')}</h4>
+                  <h4>{props.dataMSG.fullName + (props.dataMSG.letters.owner !== 'Me' && props.dataMSG.isSeen === false ? ` ( ${props.dataMSG.countMessagesDelivered} )` : '')}</h4>
                   {props.dataMSG.isTyping === true ?
                       <div className='spinner'>
                           <div className='bounce1'></div>
