@@ -109,7 +109,6 @@ export default class Playfair {
     static deCodeCipher (msg, key) {
         let text = '';
         let text1 = this.doCipher(msg, key);
-        console.log(text1, msg);
         let keyResult = this.processKey(key);
         for(let i = 0; i < text1.length; i += 2){
             let pair1 = text1[i];

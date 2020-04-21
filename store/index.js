@@ -7,7 +7,7 @@ const composeEnhancers = compose;
 
 const state = {
     chat: {
-        isShowModal: true,
+        isShowModal: false,
         loggedUser: null,
         activeUser: {},
         myChatUsers: null,

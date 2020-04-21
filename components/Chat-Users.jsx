@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import * as moment from 'moment';
 import UI_ELEMENTS from "components/shared/UI";
@@ -7,7 +7,9 @@ import {
     __GET_CHAT_USERS,
     __ADD_NEW_MESSAGE,
     __GO_PRIVATE_CHAT,
+    __CHANGE_IS_SEEN,
 } from 'store/saga';
+import debounce from "lodash.debounce";
 import {
     __SET_ACTIVE_USER
 } from 'store/actions';
@@ -48,14 +50,16 @@ const EveryUser = props => {
 EveryUser.propTypes = {
     id: PropTypes.string,
     isActiveUser: PropTypes.string,
-    dataMSG: PropTypes.object
+    dataMSG: PropTypes.object,
+    loggedUser: PropTypes.string,
 };
 
 class ChatUsers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            commonRoom: false
+            commonRoom: false,
+            startedNewChat: true,
         };
         this.__moveToCommonRoom = this.__moveToCommonRoom.bind(this);
         this.__goPrivateChat    = this.__goPrivateChat.bind(this);
@@ -83,11 +87,20 @@ class ChatUsers extends React.Component {
         })
     }
 
-    __goPrivateChat (idUser) {
-        __GO_PRIVATE_CHAT(idUser, this.props.loggedUser.id).next();
+    async __goPrivateChat (idUser) {
+        this.setState({
+            startedNewChat: false
+        });
+        await __GO_PRIVATE_CHAT(idUser, this.props.loggedUser.id).next();
+        this.setState({
+            startedNewChat: true
+        });
     }
 
     async __startPrivateChat (data) {
+        this.setState({
+            startedNewChat: false
+        });
         const _reverseArray = [
             {...data},
             ...this.props.usersList
@@ -98,14 +111,17 @@ class ChatUsers extends React.Component {
         }).next();
         __GET_CHAT_USERS(_reverseArray).next();
         this.props.__SET_ACTIVE_USER(data);
-        this.__moveToCommonRoom()
+        this.__moveToCommonRoom();
+        this.setState({
+            startedNewChat: true
+        });
     }
 
     render () {
         return (
             <div className="chat-users">
                 <h4>{!this.state.commonRoom ? 'Your Messages' : <a onClick={this.__moveToCommonRoom}><span className="lnr lnr-chevron-left"></span> Back</a>}</h4>
-                <div className="chat-room-wrapper">
+                <div className={`chat-room-wrapper ${!this.state.startedNewChat ? 'until-load-allowing' : ''}`}>
                     {!this.state.commonRoom ? <div className="users-messages-container">
                         {this.props.usersList === null ? new Array(8).fill('').map((_, i) => {
                            return (
@@ -133,13 +149,14 @@ class ChatUsers extends React.Component {
                                 </div>
                            )
                         }): this.props.usersList.length ? this.props.usersList.map(user => <EveryUser
-                            isActiveUser={this.props.activeUser.id}
+                            isActiveUser={this.props.activeUser?.id}
+                            loggedUser={this.props.loggedUser?.id}
                             id={user.id}
                             dataMSG={user}
                             key={user.id}
                             goPrivateChat={this.__goPrivateChat}
                         /> ) : <NoChatUsers goToCommonRoom={() => this.__moveToCommonRoom} />}
-                    </div>: <CommonRoom />}
+                    </div>: <CommonRoom startedNewChat={this.state.startedNewChat}/>}
                     {!this.state.commonRoom && this.props.usersList !== null && this.props.usersList.length ?
                         <UI_ELEMENTS.Button
                             background="transparent"
@@ -155,6 +172,9 @@ class ChatUsers extends React.Component {
                         : ''}
                 </div>
                 <style jsx global>{`
+                    .until-load-allowing {
+                        pointer-events: none;
+                    }
                     .skeleton-container {
                         padding: 10px 0;
                         display: flex;
@@ -195,7 +215,7 @@ class ChatUsers extends React.Component {
                         background-color: #eeeeee;
                     }
                     .users-messages-container .must-open-message {
-                        background-color: #eeeeee;
+                        background-color: #eeeeee63;
                         font-weight: 900;
                     }
                     .users-messages-container .user-messages-container:hover{

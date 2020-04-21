@@ -85,11 +85,15 @@ export async function* __CHANGE_IS_SEEN ({senderID, myID}) {
     })
 }
 
+let unsubscribe;
 export async function* __GET_ACTIVE_USERS_MESSAGES (data) {
+    if (unsubscribe) {
+        unsubscribe();
+    }
     let _messages = [];
     const db = fire.firestore();
     await new Promise (resolve => {
-        db.collection('users').where("email", "==", fire.auth().currentUser.email)
+        unsubscribe = db.collection('users').where("email", "==", fire.auth().currentUser.email)
             .onSnapshot((res) => {
                 res.forEach(doc => {
                     const _findIndex = doc.data().messages.findIndex(item => item.id === data);
@@ -97,9 +101,10 @@ export async function* __GET_ACTIVE_USERS_MESSAGES (data) {
                         _messages = doc.data().messages[_findIndex]
                     }
                     store.dispatch(__SET_ACTIVE_USER_MESSAGES(_messages.letters));
+
                     resolve();
                 })
-            })
+            });
     });
     yield _messages;
 }
@@ -120,24 +125,24 @@ export async function* __IS_TYPING_TO_ACTIVE_USER (hint, toUserId, myId) {
 }
 
 export async function* __GO_PRIVATE_CHAT (idUser, loggedId) {
-    let friendChatMyObj = {};
-    const db = fire.firestore();
-    await db.collection('users').doc(loggedId).get().then(res => {
-        friendChatMyObj = res.data();
-        let _messagesMy = res.data().messages;
-        const _findIndex = res.data().messages.findIndex(item => item.id === idUser);
-        if (_findIndex !== -1) {
-            friendChatMyObj = {
-                color: _messagesMy[_findIndex].color,
-                id: _messagesMy[_findIndex].id,
-                isSeen: _messagesMy[_findIndex].isSeen,
-                isTyping: _messagesMy[_findIndex].isTyping,
-                fullName: _messagesMy[_findIndex].fullName,
-            };
+    const usersData = store.getState().chat.myChatUsers;
+    const findActiveUser = usersData.find(user => user.id === idUser);
+    const setData = (data) => {
+        return {
+            color: data.color,
+            id: data.id,
+            isSeen: data.isSeen,
+            isTyping: data.isTyping,
+            fullName: data.fullName,
+            isSender: data.isSender,
         }
-    });
+    };
+    if (findActiveUser) {
+        store.dispatch(__SET_ACTIVE_USER( {...setData(findActiveUser)}));
+    }
+
+    let friendChatMyObj = {};
     await __CHANGE_IS_SEEN({senderID: idUser, myID: loggedId}).next();
-    store.dispatch(__SET_ACTIVE_USER(friendChatMyObj));
     yield friendChatMyObj
 }
 

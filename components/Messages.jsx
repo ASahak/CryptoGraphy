@@ -47,6 +47,7 @@ class Messages extends React.Component {
         this.__handleSuccess       = this.__handleSuccess.bind(this);
         this.__closeModal          = this.__closeModal.bind(this);
         this.__handleSubmitMessage = this.__handleSubmitMessage.bind(this);
+        this.__updateStateContent  = this.__updateStateContent.bind(this);
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -60,38 +61,44 @@ class Messages extends React.Component {
                 noChatUser: false
             })
         }
-        if (!prevProps.activeUser && this.props.activeUser && prevProps.activeUser !== this.props.activeUser) {
+        if (!prevProps.activeUser?.id && this.props.activeUser?.id && prevProps.activeUser?.id !== this.props.activeUser?.id) {
             this.setState({
                 startMessageNotify: '',
                 skeletonLoading: true
             });
-            const genMessages = await __GET_ACTIVE_USERS_MESSAGES(this.props.activeUser).next();
+            const startTime = new Date().getTime();
+            const genMessages = await __GET_ACTIVE_USERS_MESSAGES(this.props.activeUser?.id).next();
+            const endTime = new Date().getTime();
             console.log(genMessages, 'genMessages', 4444);
-            if (genMessages.value.letters[0].message === '') { //If there aren't any messages
-                this.setState({
-                    noChatUser: false,
-                    skeletonLoading: false,
-                    startMessageNotify: 'Send the first letter'
-                })
-            }
-            this.setState({
-                noChatUser: false,
-                skeletonLoading: false,
-            })
-        } else if (prevProps.activeUser !== this.props.activeUser && this.props.activeUser) {
+
+            this.__updateStateContent(genMessages.value.letters[0].message, endTime, startTime);
+        } else if (prevProps.activeUser?.id !== this.props.activeUser?.id && this.props.activeUser?.id) {
             this.setState({
                 startMessageNotify: '',
                 skeletonLoading: true
             });
-            const genMessages = await __GET_ACTIVE_USERS_MESSAGES(this.props.activeUser).next();
-            console.log(genMessages, 5555, this.props.activeUser, prevProps.activeUser);
-            if (genMessages.value.letters[0].message === '') { //If there aren't any messages
+            const startTime = new Date().getTime();
+            const genMessages = await __GET_ACTIVE_USERS_MESSAGES(this.props.activeUser?.id).next();
+            const endTime = new Date().getTime();
+
+            console.log(genMessages, 5555, this.props.activeUser?.id, prevProps.activeUser?.id);
+            this.__updateStateContent(genMessages.value.letters[0].message, endTime, startTime);
+        }
+    }
+
+    __updateStateContent (message, endTime, startTime) {
+        this.setState({//If there aren't any messages
+            ...(message === '' && {startMessageNotify: 'Send the first letter'})
+        });
+
+        if (endTime - startTime < 1000) {
+            setTimeout(() => {
                 this.setState({
                     noChatUser: false,
                     skeletonLoading: false,
-                    startMessageNotify: 'Send the first letter'
                 })
-            }
+            }, 1000)
+        } else {
             this.setState({
                 noChatUser: false,
                 skeletonLoading: false,
@@ -100,7 +107,7 @@ class Messages extends React.Component {
     }
 
     __isTyping (hint) {
-        __IS_TYPING_TO_ACTIVE_USER(hint, this.props.activeUser, this.props.loggedUser.id).next()
+        __IS_TYPING_TO_ACTIVE_USER(hint, this.props.activeUser?.id, this.props.loggedUser.id).next()
     }
 
     __handleSuccess () {
@@ -119,17 +126,18 @@ class Messages extends React.Component {
     }
 
     async __handleSubmitMessage (value, encryptedMsg, decryptMsg) {
+        const isKey = (value === encryptedMsg && value === decryptMsg);
         const messageData = {
             time: new Date().getTime(),
             message: value,
             encryptedMsg: encryptedMsg,
             decryptedMsg: decryptMsg,
-            key: this.props.encryptData?.key,
-            encryptType: this.props.encryptData.type
+            key: isKey ? 'crypt' : this.props.encryptData?.key,
+            encryptType: isKey ? 'crypt' : this.props.encryptData.type
         };
 
-        await __ADD_FRIEND_MESSAGE({friendId: this.props.activeUser, loggedUser: this.props.loggedUser}, {...messageData, owner: this.props.loggedUser.id}).next();
-        await __ADD_NEW_MESSAGE(this.props.activeUser, {
+        await __ADD_FRIEND_MESSAGE({friendId: this.props.activeUser?.id, loggedUser: this.props.loggedUser}, {...messageData, owner: this.props.loggedUser.id}).next();
+        await __ADD_NEW_MESSAGE(this.props.activeUser?.id, {
             ...messageData,
             owner: 'Me'
         }).next();
@@ -208,7 +216,11 @@ class Messages extends React.Component {
         }
     }
 
-    __sendMessage (value) {
+    __sendMessage (value, isKey) {
+        if (isKey) {
+            this.__handleSubmitMessage('crypt', 'crypt', 'crypt');
+            return
+        }
         let warning = '';
         this.setState({
             sendMessage: value
@@ -234,16 +246,17 @@ class Messages extends React.Component {
         return (
             <div
                 className={`message-content-right 
-                ${(this.state.skeletonLoading || !this.state.noChatUser) ? 'hidden-overlay' : ''} 
+                ${this.state.skeletonLoading ? 'skeleton-loading-content' : ''} 
+                ${!this.state.noChatUser ? 'hidden-overlay' : ''} 
                 ${this.state.startMessageNotify ? 'empty-message-content' : ''}
                 ${this.state.noChatUser ? 'no-chat-user': ''}
                 `}>
                 {this.state.skeletonLoading && !this.state.noChatUser ?
-                    new Array(5).fill('').map((_, i) => {
+                    new Array(6).fill('').map((_, i) => {
                             return (
                                 <div
                                     className={`skeleton-container-messages ${i % 2 !== 0 ? 'odd-container-skeleton' : ''}`}
-                                    key={i + Math.random().toString(16).slice(2, 6)} style={{opacity: (5 - i) * 0.19}}>
+                                    key={i + Math.random().toString(16).slice(2, 6)} style={{opacity: (6 - i) * 0.10}}>
                                     <Skeleton
                                         width="35px"
                                         height="35px"
@@ -273,7 +286,11 @@ class Messages extends React.Component {
                     !this.state.noChatUser &&
                     <PrivateMessageContent />
                 }
-                {!this.state.skeletonLoading && <TextAreaMessage isTyping={this.__isTyping} sendMessage={this.__sendMessage}/>}
+                {!this.state.skeletonLoading && <TextAreaMessage
+                    activeUser={this.props.activeUser}
+                    loggedUserId={this.props.loggedUser?.id}
+                    isTyping={this.__isTyping}
+                    sendMessage={this.__sendMessage}/>}
 
                 <Modal
                     show={this.state.showModal}
@@ -323,6 +340,10 @@ class Messages extends React.Component {
                     .message-content-right.hidden-overlay {
                         overflow: hidden;
                     }
+                    .message-content-right.skeleton-loading-content {
+                        overflow: hidden;
+                        justify-content: flex-start;
+                    }
                     .message-content-right {
                         height: calc(100% - 42px);
                         display: flex;
@@ -351,7 +372,7 @@ class Messages extends React.Component {
 
 const mapStateToProps = state => ({
     loggedUser: state.chat.loggedUser,
-    activeUser: state.chat.activeUser.id,
+    activeUser: state.chat.activeUser,
     usersList: state.chat.myChatUsers,
     isShowModal: state.chat.isShowModal,
     encryptData: state.chat.encryptData

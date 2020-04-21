@@ -1,0 +1,1 @@
+export const _EVERY_PAGE_LIMIT_MESSAGES = 15;
