@@ -42,7 +42,8 @@ export async function* __GET_CHAT_USERS(data) {
             .onSnapshot((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     usersData = doc.data().messages;
-                    const userId = store.getState().chat.activeUser.id || usersData[0].id;
+
+                    const userId = store.getState().chat.activeUser?.id || usersData[0]?.id;
 
                     doc.data().messages.forEach((user, index) => {
                         if (user.id === userId) {
@@ -68,6 +69,7 @@ export async function* __CHANGE_IS_SEEN ({senderID, myID}) {
         const _findIndex = res.data().messages.findIndex(item => item.id === senderID);
         if (_findIndex !== -1) {
             _messagesMy[_findIndex].isSeen = true;
+            _messagesMy[_findIndex].countMessagesDelivered = 0;
         }
         myObj.update('messages', _messagesMy);
     });
@@ -77,16 +79,21 @@ export async function* __CHANGE_IS_SEEN ({senderID, myID}) {
         const _findIndex = res.data().messages.findIndex(item => item.id === myID);
         if (_findIndex !== -1) {
             _messagesMy[_findIndex].isSeen = true;
+            _messagesMy[_findIndex].countMessagesDelivered = 0;
         }
         senderObj.update('messages', _messagesMy);
     })
 }
 
+let unsubscribe;
 export async function* __GET_ACTIVE_USERS_MESSAGES (data) {
+    if (unsubscribe) {
+        unsubscribe();
+    }
     let _messages = [];
     const db = fire.firestore();
     await new Promise (resolve => {
-        db.collection('users').where("email", "==", fire.auth().currentUser.email)
+        unsubscribe = db.collection('users').where("email", "==", fire.auth().currentUser.email)
             .onSnapshot((res) => {
                 res.forEach(doc => {
                     const _findIndex = doc.data().messages.findIndex(item => item.id === data);
@@ -94,9 +101,10 @@ export async function* __GET_ACTIVE_USERS_MESSAGES (data) {
                         _messages = doc.data().messages[_findIndex]
                     }
                     store.dispatch(__SET_ACTIVE_USER_MESSAGES(_messages.letters));
+
                     resolve();
                 })
-            })
+            });
     });
     yield _messages;
 }
@@ -117,24 +125,24 @@ export async function* __IS_TYPING_TO_ACTIVE_USER (hint, toUserId, myId) {
 }
 
 export async function* __GO_PRIVATE_CHAT (idUser, loggedId) {
-    let friendChatMyObj = {};
-    const db = fire.firestore();
-    await db.collection('users').doc(loggedId).get().then(res => {
-        friendChatMyObj = res.data();
-        let _messagesMy = res.data().messages;
-        const _findIndex = res.data().messages.findIndex(item => item.id === idUser);
-        if (_findIndex !== -1) {
-            friendChatMyObj = {
-                color: _messagesMy[_findIndex].color,
-                id: _messagesMy[_findIndex].id,
-                isSeen: _messagesMy[_findIndex].isSeen,
-                isTyping: _messagesMy[_findIndex].isTyping,
-                fullName: _messagesMy[_findIndex].fullName,
-            };
+    const usersData = store.getState().chat.myChatUsers;
+    const findActiveUser = usersData.find(user => user.id === idUser);
+    const setData = (data) => {
+        return {
+            color: data.color,
+            id: data.id,
+            isSeen: data.isSeen,
+            isTyping: data.isTyping,
+            fullName: data.fullName,
+            isSender: data.isSender,
         }
-    });
+    };
+    if (findActiveUser) {
+        store.dispatch(__SET_ACTIVE_USER( {...setData(findActiveUser)}));
+    }
+
+    let friendChatMyObj = {};
     await __CHANGE_IS_SEEN({senderID: idUser, myID: loggedId}).next();
-    store.dispatch(__SET_ACTIVE_USER(friendChatMyObj));
     yield friendChatMyObj
 }
 
@@ -150,6 +158,7 @@ export async function* __ADD_FRIEND_MESSAGE({friendId, loggedUser}, messageData)
     const _findIndex = friendUsers.messages.findIndex(item => item.id === loggedUser.id);
     if (_findIndex !== -1) {
         friendUsers.messages[_findIndex].isSeen = false;
+        friendUsers.messages[_findIndex].countMessagesDelivered += 1;
         friendUsers.messages[_findIndex].isSender = false;
         friendUsers.messages[_findIndex].isTyping = false;
         if (friendUsers.messages[_findIndex].letters.length === 1 && friendUsers.messages[_findIndex].letters[0].message === '') {
@@ -164,6 +173,7 @@ export async function* __ADD_FRIEND_MESSAGE({friendId, loggedUser}, messageData)
             isSeen: false,
             isSender: false,
             isTyping: false,
+            countMessagesDelivered: 1,
             fullName: loggedUser.fullName,
             letters: [messageData]
         })
@@ -187,12 +197,14 @@ export async function* __ADD_NEW_MESSAGE (id, pushData) {
         friendUsers = res.data();
     });
     let messagesData = currentUser.messages;
+
     if (messagesData.findIndex(item => item.id === id) === -1) {
         messagesData.unshift({
             id: id,
-            isSeen: false,
+            isSeen: true,
             isTyping: false,
             isSender: true,
+            countMessagesDelivered: 0,
             color: friendUsers.color,
             fullName: friendUsers.fullName,
             letters: [pushData]

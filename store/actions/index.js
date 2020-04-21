@@ -6,7 +6,9 @@ import {
     ACTIVE_USER,
     MY_DATA,
     SET_USER_MESSAGES,
-    LOAD_MORE_MESSAGES
+    LOAD_MORE_MESSAGES,
+    STATUS_MODAL,
+    SET_ENCRYPT_DATA
 } from '../types';
 
 export const __CHANGE_IS_LOGGED = (payload) => ({
@@ -45,5 +47,14 @@ export const __SET_ACTIVE_USER_MESSAGES = (payload) => ({
 
 export const __LOAD_MORE_MESSAGES = (payload) => ({
     type: LOAD_MORE_MESSAGES,
+    payload
+});
+
+export const __CHANGE_STATUS_MODAL = () => ({
+    type: STATUS_MODAL,
+});
+
+export const __SET_ENCRYPT_DATA = (payload) => ({
+    type: SET_ENCRYPT_DATA,
     payload
 });

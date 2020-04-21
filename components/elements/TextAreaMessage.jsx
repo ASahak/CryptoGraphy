@@ -1,24 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { classDebounce } from 'hooks/use-debounce';
+import {
+    __CHANGE_IS_SEEN
+} from "../../store/saga";
 
 const SendIcon = (props) => {
     return (
         <>
             {props.value ?
-                <img src="./assets/images/send.png"/> :
-                <img src="./assets/images/key.png"/>
+                <img src="./assets/images/send.png" onClick={() => props.sendMessage('message')}/> :
+                <img src="./assets/images/key.png" onClick={() => props.sendMessage('key')}/>
             }
         </>
     )
 };
 SendIcon.propTypes = {
-    value: PropTypes.string
+    value: PropTypes.string,
+    sendMessage: PropTypes.func,
 };
 
 class TextAreaMessage extends React.PureComponent {
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
         this.messageArea = React.createRef();
         this.state = {
             messageValue: '',
@@ -27,12 +31,25 @@ class TextAreaMessage extends React.PureComponent {
         this.__setMessageValue    = this.__setMessageValue.bind(this);
         this.__autoSize           = this.__autoSize.bind(this);
         this.__submitMessage      = this.__submitMessage.bind(this);
+        this.__userIsOnline       = this.__userIsOnline.bind(this);
+        this.__userIsOffline      = this.__userIsOffline.bind(this);
     }
 
     __autoSize () {
         this.messageArea.current.style.height = 'auto';
         this.messageArea.current.style.height = (this.messageArea.current.scrollHeight) + 'px';
     }
+
+    __userIsOffline () {
+        this.props.isTyping(false);
+    }
+
+    __userIsOnline () {
+        if (this.props.activeUser?.id && this.props.loggedUserId && !this.props.activeUser?.isSender) {
+            __CHANGE_IS_SEEN({senderID: this.props.activeUser?.id, myID: this.props.loggedUserId}).next();
+        }
+    }
+
 
     __debounceTyping = classDebounce(this.__isTyping, 600);
 
@@ -46,14 +63,17 @@ class TextAreaMessage extends React.PureComponent {
         if (evt.key === 'Enter' && evt.shiftKey) {
             return;
         }
-        if (evt.key === 'Enter') {
+        if (evt === 'key') {
+            this.props.sendMessage('key', true);
+        } else if (evt === 'message' || evt.key === 'Enter') {
             this.state.messageValue !== '' && this.props.sendMessage(this.state.messageValue);
+            this.messageArea.current.blur();
             this.setState({
                 messageValue: ''
             }, () => {
                 this.messageArea.current.style.height = 'auto';
             });
-            evt.preventDefault()
+            evt.key && evt.preventDefault()
         }
     }
 
@@ -75,11 +95,14 @@ class TextAreaMessage extends React.PureComponent {
                         ref={this.messageArea}
                         value={this.state.messageValue}
                         rows={this.state.rowLineCount}
+                        onFocus={this.__userIsOnline}
+                        onBlur={this.__userIsOffline}
                         onInput={this.__autoSize}
                         onChange={(evt) => {this.__setMessageValue(evt); this.__debounceTyping()}}
                         placeholder="Type message..."
                         onKeyDown={this.__submitMessage}></textarea>
                     <SendIcon
+                        sendMessage={this.__submitMessage}
                         value={this.state.messageValue}
                     />
                 </div>
@@ -121,4 +144,12 @@ class TextAreaMessage extends React.PureComponent {
         )
     }
 }
+
+TextAreaMessage.propTypes = {
+    loggedUserId: PropTypes.string,
+    activeUser: PropTypes.object,
+    isTyping: PropTypes.func,
+    sendMessage: PropTypes.func,
+};
+
 export default TextAreaMessage;

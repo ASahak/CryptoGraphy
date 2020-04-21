@@ -6,7 +6,7 @@ import Alert from 'components/shared/UI/Alert';
 import Router from "next/router";
 import Icon from "components/Icons/icon";
 import * as authService from "utils/auth-service";
-import {bodyLoading} from "components/shared/helpers/global-functions";
+import {__bodyLoading} from "components/shared/helpers/global-functions";
 import Link from "next/link";
 import { connect } from 'react-redux';
 import {
@@ -82,14 +82,14 @@ class ResetPassword extends React.Component{
         this.state = {
             isLoading: this.props.isLoading
         };
-        bodyLoading(this.state.isLoading);
+        __bodyLoading(this.state.isLoading);
         authService.__isLogged().then(res => {
             if (res) {
                 Router.push('/')
             } else {
                 this.setState({
                     isLoading: false
-                }, () => bodyLoading(this.state.isLoading, false));
+                }, () => __bodyLoading(this.state.isLoading, false));
             }
         })
     }
