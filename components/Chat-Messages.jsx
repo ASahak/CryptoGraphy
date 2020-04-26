@@ -58,7 +58,6 @@ class ChatMessages extends React.Component {
         this.props.__SET_ENCRYPT_DATA({type: 'type', value: data})
     }
     render () {
-        console.log(this.props.mobileUsersListOpen)
         return (
             <div className="chat-messages">
                 <div className="select-bar">
