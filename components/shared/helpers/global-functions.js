@@ -24,3 +24,7 @@ export function __getRandomColor() {
     }
     return color;
 }
+
+export function __detectCryptIcon (msg) {
+    return msg.message === msg.key && msg.message === msg.encryptType && msg.message === msg.decryptedMsg && msg.message === msg.encryptType
+}

@@ -2,19 +2,20 @@ import React from 'react';
 import {connect} from "react-redux";
 import {
     __GET_ACTIVE_USERS_MESSAGES,
-    __ADD_NEW_MESSAGE,
+    __ADD_MESSAGE,
     __GET_CHAT_USERS,
-    __ADD_FRIEND_MESSAGE,
-    __IS_TYPING_TO_ACTIVE_USER
+    __IS_TYPING_TO_ACTIVE_USER,
+    __EDIT_MESSAGE,
 } from 'store/saga';
 import {
-    __SET_ENCRYPT_DATA
+    __SET_ENCRYPT_DATA,
 } from 'store/actions';
 import TextAreaMessage from 'components/elements/TextAreaMessage';
 import Skeleton from "./Skeleton";
 import PrivateMessageContent from "components/elements/PrivateMessageContent";
 import { Modal } from 'components/shared/UI/Modal';
 import UI_ELEMENTS from "./shared/UI";
+import { Bus } from "components/shared/helpers/Bus";
 import {
     Vigenere,
     RSA,
@@ -42,12 +43,13 @@ class Messages extends React.Component {
                 warningMsg: '',
             }
         };
-        this.__sendMessage         = this.__sendMessage.bind(this);
-        this.__isTyping            = this.__isTyping.bind(this);
-        this.__handleSuccess       = this.__handleSuccess.bind(this);
-        this.__closeModal          = this.__closeModal.bind(this);
-        this.__handleSubmitMessage = this.__handleSubmitMessage.bind(this);
-        this.__updateStateContent  = this.__updateStateContent.bind(this);
+        this.__sendMessage              = this.__sendMessage.bind(this);
+        this.__isTyping                 = this.__isTyping.bind(this);
+        this.__handleSuccess            = this.__handleSuccess.bind(this);
+        this.__closeModal               = this.__closeModal.bind(this);
+        this.__handleSubmitMessage      = this.__handleSubmitMessage.bind(this);
+        this.__updateStateContent       = this.__updateStateContent.bind(this);
+        this.__messagesHaveBeenDeleted  = this.__messagesHaveBeenDeleted.bind(this);
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -69,7 +71,6 @@ class Messages extends React.Component {
             const startTime = new Date().getTime();
             const genMessages = await __GET_ACTIVE_USERS_MESSAGES(this.props.activeUser?.id).next();
             const endTime = new Date().getTime();
-            console.log(genMessages, 'genMessages', 4444);
 
             this.__updateStateContent(genMessages.value.letters[0].message, endTime, startTime);
         } else if (prevProps.activeUser?.id !== this.props.activeUser?.id && this.props.activeUser?.id) {
@@ -81,9 +82,18 @@ class Messages extends React.Component {
             const genMessages = await __GET_ACTIVE_USERS_MESSAGES(this.props.activeUser?.id).next();
             const endTime = new Date().getTime();
 
-            console.log(genMessages, 5555, this.props.activeUser?.id, prevProps.activeUser?.id);
             this.__updateStateContent(genMessages.value.letters[0].message, endTime, startTime);
+        } else if (prevProps.messages.length === 1 && prevProps.messages[0].message === '' && this.props.messages.length === 1 && this.props.messages[0].message !== '') {
+            this.setState({
+                startMessageNotify: '',
+            });
         }
+    }
+
+    __messagesHaveBeenDeleted () {
+        this.setState({
+            startMessageNotify: 'Send the first letter'
+        })
     }
 
     __updateStateContent (message, endTime, startTime) {
@@ -126,7 +136,7 @@ class Messages extends React.Component {
     }
 
     async __handleSubmitMessage (value, encryptedMsg, decryptMsg) {
-        const isKey = (value === encryptedMsg && value === decryptMsg);
+        const isKey = (value === 'crypt' && value === encryptedMsg && value === decryptMsg && (isNaN(decryptMsg)));
         const messageData = {
             time: new Date().getTime(),
             message: value,
@@ -136,20 +146,29 @@ class Messages extends React.Component {
             encryptType: isKey ? 'crypt' : this.props.encryptData.type
         };
 
-        await __ADD_FRIEND_MESSAGE({friendId: this.props.activeUser?.id, loggedUser: this.props.loggedUser}, {...messageData, owner: this.props.loggedUser.id}).next();
-        await __ADD_NEW_MESSAGE(this.props.activeUser?.id, {
-            ...messageData,
-            owner: 'Me'
+        await __ADD_MESSAGE({
+            friend: {
+                friendId: this.props.activeUser?.id,
+                loggedUser: this.props.loggedUser,
+                msgData: {...messageData, owner: this.props.loggedUser.id}
+            },
+            my: {
+                friendId: this.props.activeUser?.id,
+                loggedUser: this.props.loggedUser,
+                msgData: {...messageData, owner: 'Me'}
+            }
         }).next();
+
         __GET_CHAT_USERS().next();
         this.setState({
             startMessageNotify: ''
         });
+        Bus.dispatch('messageSendingFinish');
     }
 
     __encryptCommon (value, key, type, callback = () => {}) {
-        let sendMSG = {}
-;        switch (type) {
+        let sendMSG = {};
+        switch (type) {
             case 'vigenere':
                 const encryptedMsgV = Vigenere.doCryptVigenere(false, value, key, (msg) => {
                     callback(msg);
@@ -157,7 +176,7 @@ class Messages extends React.Component {
                 });
                 return sendMSG = {
                     encryptedMSG: encryptedMsgV,
-                    decryptedMsg: Vigenere.doCryptVigenere(true, encryptedMsgV, key, (msg) => {
+                    decryptedMSG: Vigenere.doCryptVigenere(true, encryptedMsgV, key, (msg) => {
                         callback(msg);
                         this.props.__SET_ENCRYPT_DATA({type: 'warning', value: true});
                     }),
@@ -166,7 +185,7 @@ class Messages extends React.Component {
                 const encryptedMsgS = Substitution(value);
                 return sendMSG = {
                     encryptedMSG: encryptedMsgS.encrypt,
-                    decryptedMsg: encryptedMsgS.decrypt
+                    decryptedMSG: encryptedMsgS.decrypt
                 };
             case 'rsa' :
                 // Message
@@ -182,7 +201,7 @@ class Messages extends React.Component {
 
                 return sendMSG = {
                     encryptedMSG: encoded_message.toString(),
-                    decryptedMsg: decoded_message
+                    decryptedMSG: decoded_message
                 };
             case 'caesar':
                 const encryptedMsgC = Caesar.doCrypt(false, value, key, (msg) => {
@@ -190,7 +209,7 @@ class Messages extends React.Component {
                 });
                 return sendMSG = {
                     encryptedMSG: encryptedMsgC,
-                    decryptedMsg: Caesar.doCrypt(true, encryptedMsgC, key, (msg) => {
+                    decryptedMSG: Caesar.doCrypt(true, encryptedMsgC, key, (msg) => {
                         callback(msg);
                     })
                 };
@@ -199,7 +218,7 @@ class Messages extends React.Component {
                     encryptedMSG: Playfair.doCipher(value, key, (msg) => {
                         callback(msg);
                     }),
-                    decryptedMsg: Playfair.deCodeCipher(value, key)
+                    decryptedMSG: Playfair.deCodeCipher(value, key)
                 };
             case 'vernam':
                 let _keyE = '';
@@ -210,14 +229,23 @@ class Messages extends React.Component {
 
                 return sendMSG = {
                     encryptedMSG: encryptedMsgVer,
-                    decryptedMsg: Vernam.doDecrypt(value, _keyE)
+                    decryptedMSG: Vernam.doDecrypt(value, _keyE)
                 };
             default : break;
         }
     }
 
-    __sendMessage (value, isKey) {
-        if (isKey) {
+    async __sendMessage (value, isKey) {
+        if (isKey instanceof Object) {
+            const encryptedMsg = this.__encryptCommon.call(this, value, isKey.mainObj?.key, isKey.mainObj?.encryptType);
+            await __EDIT_MESSAGE(
+                {value, e: encryptedMsg.encryptedMSG, d: encryptedMsg.decryptedMSG},
+                isKey?.index,
+                {idUser: this.props.activeUser?.id, myId: this.props.loggedUser?.id}).next();
+            Bus.dispatch('endEditing');
+            Bus.dispatch('messageSendingFinish');
+            return
+        } else if (isKey) {
             this.__handleSubmitMessage('crypt', 'crypt', 'crypt');
             return
         }
@@ -234,11 +262,11 @@ class Messages extends React.Component {
                         yourMessage: value,
                         ...(warning && {warningMsg: warning}),
                         ...(encryptMsg.encryptedMSG && {encryptText: encryptMsg.encryptedMSG}),
-                        ...(encryptMsg.decryptedMsg && {decryptText: encryptMsg.decryptedMsg}),
+                        ...(encryptMsg.decryptedMSG && {decryptText: encryptMsg.decryptedMSG}),
                     },
                     showModal: true
                 });
-            } else if (encryptMsg.encryptedMSG && encryptMsg.decryptedMsg) this.__handleSubmitMessage(value, encryptMsg.encryptedMSG, encryptMsg.decryptedMsg);
+            } else if (encryptMsg.encryptedMSG && encryptMsg.decryptedMSG) this.__handleSubmitMessage(value, encryptMsg.encryptedMSG, encryptMsg.decryptedMSG);
         });
     }
 
@@ -284,7 +312,7 @@ class Messages extends React.Component {
                         })
                     : this.state.startMessageNotify ? <div className="send-first-message">{this.state.startMessageNotify}</div>:
                     !this.state.noChatUser &&
-                    <PrivateMessageContent />
+                    <PrivateMessageContent messagesHaveBeenDeleted={this.__messagesHaveBeenDeleted} />
                 }
                 {!this.state.skeletonLoading && <TextAreaMessage
                     activeUser={this.props.activeUser}
@@ -375,11 +403,12 @@ const mapStateToProps = state => ({
     activeUser: state.chat.activeUser,
     usersList: state.chat.myChatUsers,
     isShowModal: state.chat.isShowModal,
-    encryptData: state.chat.encryptData
+    encryptData: state.chat.encryptData,
+    messages: state.chat.activeUserMessages,
 });
 
 const mapDispatchToProps = {
-    __SET_ENCRYPT_DATA
+    __SET_ENCRYPT_DATA,
 };
 
 export default connect(

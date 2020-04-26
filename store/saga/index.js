@@ -9,6 +9,7 @@ import {
 import store from 'store';
 import fire from "config/fire";
 
+
 export function* __SET_LOGGED(action) {
     yield put(store.dispatch(__CHANGE_IS_LOGGED(action)));
 }
@@ -82,7 +83,8 @@ export async function* __CHANGE_IS_SEEN ({senderID, myID}) {
             _messagesMy[_findIndex].countMessagesDelivered = 0;
         }
         senderObj.update('messages', _messagesMy);
-    })
+    });
+    yield;
 }
 
 let unsubscribe;
@@ -111,7 +113,8 @@ export async function* __GET_ACTIVE_USERS_MESSAGES (data) {
 
 export async function* __IS_TYPING_TO_ACTIVE_USER (hint, toUserId, myId) {
     let friendUsers = null;
-    const db = fire.firestore();
+    const db        = fire.firestore();
+
     await db.collection('users').doc(toUserId).get().then(res => {
         const myObj = db.doc(`users/${toUserId}`);
         friendUsers = res.data();
@@ -125,20 +128,10 @@ export async function* __IS_TYPING_TO_ACTIVE_USER (hint, toUserId, myId) {
 }
 
 export async function* __GO_PRIVATE_CHAT (idUser, loggedId) {
-    const usersData = store.getState().chat.myChatUsers;
+    const usersData      = store.getState().chat.myChatUsers;
     const findActiveUser = usersData.find(user => user.id === idUser);
-    const setData = (data) => {
-        return {
-            color: data.color,
-            id: data.id,
-            isSeen: data.isSeen,
-            isTyping: data.isTyping,
-            fullName: data.fullName,
-            isSender: data.isSender,
-        }
-    };
     if (findActiveUser) {
-        store.dispatch(__SET_ACTIVE_USER( {...setData(findActiveUser)}));
+        store.dispatch(__SET_ACTIVE_USER( findActiveUser));
     }
 
     let friendChatMyObj = {};
@@ -146,97 +139,218 @@ export async function* __GO_PRIVATE_CHAT (idUser, loggedId) {
     yield friendChatMyObj
 }
 
-export async function* __ADD_FRIEND_MESSAGE({friendId, loggedUser}, messageData) {
-    const db = fire.firestore();
-    let updateFriendUsers = null;
-    let friendUsers = null;
-    await db.collection('users').doc(friendId).get().then(res => {
-        updateFriendUsers = db.doc(`users/${res.data().id}`);
-        friendUsers = res.data();
-    });
-
-    const _findIndex = friendUsers.messages.findIndex(item => item.id === loggedUser.id);
-    if (_findIndex !== -1) {
-        friendUsers.messages[_findIndex].isSeen = false;
-        friendUsers.messages[_findIndex].countMessagesDelivered += 1;
-        friendUsers.messages[_findIndex].isSender = false;
-        friendUsers.messages[_findIndex].isTyping = false;
-        if (friendUsers.messages[_findIndex].letters.length === 1 && friendUsers.messages[_findIndex].letters[0].message === '') {
-            friendUsers.messages[_findIndex].letters[0] = messageData;
-        } else {
-            friendUsers.messages[_findIndex].letters.push(messageData);
-        }
-    } else {
-        friendUsers.messages.push({
-            id: loggedUser.id,
-            color: loggedUser.color,
-            isSeen: false,
-            isSender: false,
-            isTyping: false,
-            countMessagesDelivered: 1,
-            fullName: loggedUser.fullName,
-            letters: [messageData]
+export async function* __ADD_MESSAGE({friend, my}) {
+    const db                = fire.firestore();
+    const updateMyUsers     = db.collection('users').doc(my.loggedUser.id);
+    const updateAll         = [];
+    const _batches          = [];
+    friend && updateAll.push(
+        new Promise((resolve, reject) => {
+            const updateFriendUsers = db.collection('users').doc(friend.friendId);
+            updateFriendUsers.get().then(async res => {
+                _batches[0] = db.batch();
+                if (!res.exists) reject("Document does not exist!");
+                const friendUsers = res.data();
+                const _findIndex = friendUsers.messages.findIndex(item => item.id === friend.loggedUser?.id);
+                if (_findIndex !== -1) {
+                    friendUsers.messages[_findIndex].isSeen = false;
+                    friendUsers.messages[_findIndex].countMessagesDelivered += 1;
+                    friendUsers.messages[_findIndex].isSender = false;
+                    friendUsers.messages[_findIndex].isTyping = false;
+                    if (friendUsers.messages[_findIndex].letters.length === 1 && friendUsers.messages[_findIndex].letters[0].message === '') {
+                        friendUsers.messages[_findIndex].letters[0] = friend.msgData;
+                    } else {
+                        friendUsers.messages[_findIndex].letters.push(friend.msgData);
+                    }
+                } else {
+                    friendUsers.messages.push({
+                        id: friend.loggedUser.id,
+                        color: friend.loggedUser.color,
+                        isSeen: false,
+                        isSender: false,
+                        isTyping: false,
+                        countMessagesDelivered: 1,
+                        fullName: friend.loggedUser.fullName,
+                        letters: [friend.msgData]
+                    })
+                }
+                _batches[0].update(updateFriendUsers, {'messages': friendUsers.messages});
+                resolve();
+            })
         })
-    }
-    await updateFriendUsers.update({'messages': friendUsers.messages});
-    yield 'success'
+    );
+    my && updateAll.push(
+        new Promise((resolve, reject) => {
+            updateMyUsers.get().then(async res => {
+
+                _batches[1] = db.batch();
+                if (!res.exists) reject("Document does not exist!");
+                const myUsers = res.data();
+                let friendUsers = {};
+                await db.collection('users').doc(my.friendId).get().then(res => {
+                    friendUsers = res.data();
+                });
+
+                const _findIndex = myUsers.messages.findIndex(item => item.id === my.friendId);
+                if (_findIndex === -1) {
+                    myUsers.messages.unshift({
+                        id: my.friendId,
+                        isSeen: true,
+                        isTyping: false,
+                        isSender: true,
+                        countMessagesDelivered: 0,
+                        color: friendUsers.color,
+                        fullName: friendUsers.fullName,
+                        letters: [my.msgData]
+                    });
+                } else {
+                    const _currentIndex = myUsers.messages.findIndex(item => item.id === my.friendId);
+                    const _saveData = myUsers.messages[_currentIndex];
+                    if (myUsers.messages[_currentIndex].letters.length === 1 && myUsers.messages[_currentIndex].letters[0].time === null) {
+                        myUsers.messages[_currentIndex].letters[0] = my.msgData;
+                    } else {
+                        myUsers.messages[_currentIndex].letters.push(my.msgData);
+                    }
+                    myUsers.messages[_currentIndex].isSeen = false;
+                    myUsers.messages[_currentIndex].isTyping = false;
+                    myUsers.messages[_currentIndex].isSender = true;
+                    myUsers.messages.splice(_currentIndex, 1);
+                    myUsers.messages.unshift(_saveData);
+                }
+                _batches[1].update(updateMyUsers, {'messages': myUsers.messages});
+                resolve();
+
+            })
+        })
+    );
+    await Promise.all(updateAll).then(_ => {
+        _batches.forEach(batch => batch.commit());
+    });
+    yield;
 }
 
-export async function* __ADD_NEW_MESSAGE (id, pushData) {
-    const db = fire.firestore();
-    let currentUser = null;
-    let updateCurrentUser = null;
-    let friendUsers = {};
-    await db.collection('users').where("email", "==", fire.auth().currentUser.email).get().then(res => {
-        res.forEach(doc => {
-            updateCurrentUser = db.doc(`users/${doc.data().id}`);
-            currentUser = doc.data();
-        })
-    });
-    await db.collection('users').doc(id).get().then(res => {
-        friendUsers = res.data();
-    });
-    let messagesData = currentUser.messages;
-
-    if (messagesData.findIndex(item => item.id === id) === -1) {
-        messagesData.unshift({
-            id: id,
-            isSeen: true,
-            isTyping: false,
-            isSender: true,
-            countMessagesDelivered: 0,
-            color: friendUsers.color,
-            fullName: friendUsers.fullName,
-            letters: [pushData]
+export async function* __REMOVE_MESSAGE (index, {idUser, myId}) {
+    const db                = fire.firestore();
+    let updateFriendUsers   = null,
+        friendUsers         = null,
+        updateMyUsers       = null,
+        myUsers             = null;
+    const _batches          = [];
+    const updateAll         = [];
+    updateAll.push(new Promise((resolve, reject) => {
+        db.collection('users').doc(idUser).get().then( res => {
+            updateFriendUsers = db.doc(`users/${res.data().id}`);
+            friendUsers = res.data();
+            _batches[0] = db.batch();
+            const _findIndexInFriend = friendUsers.messages.findIndex(item => item.id === myId);
+            friendUsers.messages[_findIndexInFriend].letters.splice(index, 1);
+            if (friendUsers.messages[_findIndexInFriend].letters.length === 0) {
+                friendUsers.messages[_findIndexInFriend].letters.push({message: '', time: null});
+            }
+            _batches[0].update(updateFriendUsers, {'messages': friendUsers.messages});
+            resolve();
         });
-    } else {
-        const _currentIndex = messagesData.findIndex(item => item.id === id);
-        const _saveData = messagesData[_currentIndex];
-        if (messagesData[_currentIndex].letters.length === 1 && messagesData[_currentIndex].letters[0].time === null) {
-            messagesData[_currentIndex].letters[0] = pushData;
-        } else {
-            messagesData[_currentIndex].letters.push(pushData);
-        }
-        messagesData[_currentIndex].isSeen = false;
-        messagesData[_currentIndex].isTyping = false;
-        messagesData[_currentIndex].isSender = true;
-        messagesData.splice(_currentIndex, 1);
-        messagesData.unshift(_saveData);
-    }
-    await updateCurrentUser.update({'messages': messagesData});
-
-    yield messagesData;
+    }));
+    updateAll.push(new Promise((resolve, reject) => {
+        db.collection('users').doc(myId).get().then( res => {
+            updateMyUsers = db.doc(`users/${res.data().id}`);
+            myUsers = res.data();
+            _batches[1] = db.batch();
+            const _findIndexInMy = myUsers.messages.findIndex(item => item.id === idUser);
+            myUsers.messages[_findIndexInMy].letters.splice(index, 1);
+            if (myUsers.messages[_findIndexInMy].letters.length === 0) {
+                myUsers.messages[_findIndexInMy].letters.push({message: '', time: null});
+            }
+            _batches[1].update(updateMyUsers, {'messages': myUsers.messages});
+            resolve();
+        })
+    }));
+    await Promise.all(updateAll).then(_ => {
+        _batches.forEach(batch => batch.commit());
+    });
+    yield;
 }
 
+export async function* __EDIT_MESSAGE (msgData, index, {idUser, myId}) {
+    const db                = fire.firestore();
+    let updateFriendUsers   = null,
+        friendUsers         = null,
+        updateMyUsers       = null,
+        myUsers             = null;
+    const _batches          = [];
+    const updateAll         = [];
+    updateAll.push(
+        new Promise(resolve => {
+            _batches[0] = db.batch();
+            db.collection('users').doc(idUser).get().then(async res => {
+                updateFriendUsers = db.doc(`users/${res.data().id}`);
+                friendUsers = res.data();
+                const _findIndexInFriend = friendUsers.messages.findIndex(item => item.id === myId);
+                if (!msgData) {
+                    friendUsers.messages[_findIndexInFriend].editedMsgIndex = -1;
+                    friendUsers.messages[_findIndexInFriend].countMessagesDelivered = 0;
+                    friendUsers.messages[_findIndexInFriend].isSeen = true;
+                    friendUsers.messages[_findIndexInFriend].isSender = true;
+                    friendUsers.messages[_findIndexInFriend].isTyping = false;
+                } else if (_findIndexInFriend !== -1) {
+                    friendUsers.messages[_findIndexInFriend].editedMsgIndex = index;
+                    friendUsers.messages[_findIndexInFriend].letters[index] = {
+                        ...friendUsers.messages[_findIndexInFriend].letters[index],
+                        decryptedMsg: msgData.d,
+                        encryptedMsg: msgData.e,
+                        message: msgData.value,
+                        edited: true,
+                    }
+                }
+                _batches[0].update(updateFriendUsers, {'messages': friendUsers.messages});
+                resolve();
+            });
+        })
+    );
+    updateAll.push(
+        new Promise(resolve => {
+            _batches[1] = db.batch();
+            db.collection('users').doc(myId).get().then(async res => {
+                updateMyUsers = db.doc(`users/${res.data().id}`);
+                myUsers = res.data();
+                const _findIndexInMy = myUsers.messages.findIndex(item => item.id === idUser);
+                if (!msgData) {
+                    myUsers.messages[_findIndexInMy].editedMsgIndex = -1;
+                    myUsers.messages[_findIndexInMy].countMessagesDelivered = 0;
+                    myUsers.messages[_findIndexInMy].isSeen = true;
+                    myUsers.messages[_findIndexInMy].isSender = true;
+                    myUsers.messages[_findIndexInMy].isTyping = false;
+                } else if (_findIndexInMy !== -1) {
+                    myUsers.messages[_findIndexInMy].editedMsgIndex = index;
+                    myUsers.messages[_findIndexInMy].letters[index] = {
+                        ...myUsers.messages[_findIndexInMy].letters[index],
+                        decryptedMsg: msgData.d,
+                        encryptedMsg: msgData.e,
+                        message: msgData.value,
+                        edited: true,
+                    }
+                }
+                _batches[1].update(updateMyUsers, {'messages': myUsers.messages});
+                resolve();
+            });
+        })
+    );
+    await Promise.all(updateAll).then(_ => {
+        _batches.forEach(batch => batch.commit());
+    });
+    yield;
+}
 export function * _rootSaga () {
     yield all([
         __SET_LOGGED,
         __GET_CHAT_USERS,
-        __ADD_NEW_MESSAGE,
         __GET_ALL_USERS,
         __CHANGE_IS_SEEN,
-        __ADD_FRIEND_MESSAGE,
         __GET_ACTIVE_USERS_MESSAGES,
-        __IS_TYPING_TO_ACTIVE_USER
+        __IS_TYPING_TO_ACTIVE_USER,
+        __GO_PRIVATE_CHAT,
+        __EDIT_MESSAGE,
+        __REMOVE_MESSAGE,
+        __ADD_MESSAGE,
     ])
 }

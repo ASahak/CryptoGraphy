@@ -5,7 +5,8 @@ import Messages from "components/Messages";
 import {connect} from "react-redux";
 import {
     __CHANGE_STATUS_MODAL,
-    __SET_ENCRYPT_DATA
+    __SET_ENCRYPT_DATA,
+    __CHANGE_MOBILE_LIST_OPEN,
 } from 'store/actions';
 
 
@@ -57,9 +58,11 @@ class ChatMessages extends React.Component {
         this.props.__SET_ENCRYPT_DATA({type: 'type', value: data})
     }
     render () {
+        console.log(this.props.mobileUsersListOpen)
         return (
             <div className="chat-messages">
                 <div className="select-bar">
+                    <span className="lnr lnr-menu d-none_sm" onClick={() => this.props.__CHANGE_MOBILE_LIST_OPEN(true)}></span>
                     <UI_ELEMENTS.Select
                         selectEncrypt={this.__selectEncrypt}
                         placeholder="Please choose encrypt type"
@@ -105,7 +108,6 @@ class ChatMessages extends React.Component {
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        border-bottom: 1px solid rgb(227, 222, 222);
                         border-left: 1px solid rgb(227, 222, 222);
                         cursor: pointer;
                     }
@@ -116,7 +118,6 @@ class ChatMessages extends React.Component {
                         margin-bottom: 0;
                         height: 100%;
                         background-color: #fff;
-                        border-bottom: 1px solid rgb(227, 222, 222) !important;
                         border-left: 1px solid rgb(227, 222, 222) !important;
                         border-top: 0;
                         border-right: 0;
@@ -125,6 +126,12 @@ class ChatMessages extends React.Component {
                         display: flex;
                         align-items: center;
                         height: 41.8px;
+                        border-bottom: 1px solid rgb(227, 222, 222);
+                    }
+                    .chat-messages .select-bar .lnr-menu {
+                        font-size: 26px;
+                        padding-left: 10px;
+                        cursor: pointer;
                     }
                     .chat-messages .select-bar .warning-wrap {
                         box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
@@ -145,6 +152,20 @@ class ChatMessages extends React.Component {
                         width: 70%;
                         box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
                     }
+                    .d-none_sm {
+                        display: none;
+                    }
+                    @media screen and (max-width: 767px) {
+                        .d-none_sm {
+                            display: block;
+                        }
+                        .chat-messages {
+                            opacity: ${!this.props.mobileUsersListOpen ? 1 : 0};
+                            transition: .2s;
+                            overflow: hidden;
+                            width: ${!this.props.mobileUsersListOpen ? 100 : 0}%;
+                        }
+                    }
                 `}</style>
             </div>
         )
@@ -153,11 +174,13 @@ class ChatMessages extends React.Component {
 
 const mapStateToProps = state => ({
     isShowModal: state.chat.isShowModal,
-    encryptData: state.chat.encryptData
+    encryptData: state.chat.encryptData,
+    mobileUsersListOpen: state.chat.mobileUsersListOpen,
 });
 const mapDispatchToProps = {
     __CHANGE_STATUS_MODAL,
-    __SET_ENCRYPT_DATA
+    __SET_ENCRYPT_DATA,
+    __CHANGE_MOBILE_LIST_OPEN,
 };
 
 export default connect(

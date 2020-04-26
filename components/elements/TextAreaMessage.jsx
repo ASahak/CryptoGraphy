@@ -1,21 +1,44 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { classDebounce } from 'hooks/use-debounce';
 import {
     __CHANGE_IS_SEEN
 } from "../../store/saga";
+import { Bus } from "components/shared/helpers/Bus";
 
 const SendIcon = (props) => {
     return (
         <>
-            {props.value ?
+            {props.inProcessing ? <div className="sbl-circ"></div> : props.value ?
                 <img src="./assets/images/send.png" onClick={() => props.sendMessage('message')}/> :
                 <img src="./assets/images/key.png" onClick={() => props.sendMessage('key')}/>
             }
+            <style jsx>{`
+                .sbl-circ {
+                  height: 22px;
+                  width: 22px;
+                  color: #5a5a5a;
+                  position: relative;
+                  display: block;
+                  border: 2px solid;
+                  border-radius: 50%;
+                  border-top-color: transparent;
+                  animation: rotate 1s linear infinite; 
+                  margin: 5px 10px 5px 5px;
+                }
+
+                @keyframes rotate {
+                  0% {
+                    transform: rotate(0); }
+                  100% {
+                    transform: rotate(360deg); } 
+                }
+            `}</style>
         </>
     )
 };
 SendIcon.propTypes = {
+    inProcessing: PropTypes.bool,
     value: PropTypes.string,
     sendMessage: PropTypes.func,
 };
@@ -26,6 +49,11 @@ class TextAreaMessage extends React.PureComponent {
         this.messageArea = React.createRef();
         this.state = {
             messageValue: '',
+            inProcessing: false,
+            editMessage: {
+                index: null,
+                msg: '',
+            }
         };
         this.__debounceTyping     = this.__debounceTyping.bind(this);
         this.__setMessageValue    = this.__setMessageValue.bind(this);
@@ -33,6 +61,24 @@ class TextAreaMessage extends React.PureComponent {
         this.__submitMessage      = this.__submitMessage.bind(this);
         this.__userIsOnline       = this.__userIsOnline.bind(this);
         this.__userIsOffline      = this.__userIsOffline.bind(this);
+
+        Bus.subscribe('editMessage', ({msg, index}) => {
+            this.setState({
+                editMessage: {
+                    mainObj: msg,
+                    msg: msg?.message,
+                    index: index
+                }
+            }, () => this.messageArea.current?.focus())
+        });
+        Bus.subscribe('messageSendingFinish', () => {
+            this.setState({
+                inProcessing: false
+            });
+        });
+        addEventListener('blur', () => {
+            this.props.isTyping(false);
+        })
     }
 
     __autoSize () {
@@ -41,7 +87,12 @@ class TextAreaMessage extends React.PureComponent {
     }
 
     __userIsOffline () {
-        this.props.isTyping(false);
+        if (this.state.editMessage.hasOwnProperty('mainObj') && !this.state.editMessage.msg) {
+            Bus.dispatch('cancelEditing');
+            this.setState({
+                editMessage: {},
+            })
+        }
     }
 
     __userIsOnline () {
@@ -54,7 +105,7 @@ class TextAreaMessage extends React.PureComponent {
     __debounceTyping = classDebounce(this.__isTyping, 600);
 
     __isTyping () {
-        if (this.state.messageValue !== '') {
+        if (this.state.messageValue !== '' && !this.state.editMessage.msg ) {
             this.props.isTyping(true);
         }
     }
@@ -65,10 +116,21 @@ class TextAreaMessage extends React.PureComponent {
         }
         if (evt === 'key') {
             this.props.sendMessage('key', true);
+            this.setState({
+                inProcessing: true
+            });
         } else if (evt === 'message' || evt.key === 'Enter') {
-            this.state.messageValue !== '' && this.props.sendMessage(this.state.messageValue);
+            this.setState({
+                inProcessing: true
+            });
+            if (this.state.editMessage.msg) {
+                this.props.sendMessage(this.state.editMessage.msg, this.state.editMessage)
+            } else if (this.state.messageValue !== '' ){
+                this.props.sendMessage(this.state.messageValue);
+            }
             this.messageArea.current.blur();
             this.setState({
+                editMessage: {},
                 messageValue: ''
             }, () => {
                 this.messageArea.current.style.height = 'auto';
@@ -79,12 +141,23 @@ class TextAreaMessage extends React.PureComponent {
 
     __setMessageValue (evt) {
         this.setState({
+            ...(this.state.editMessage.msg && {
+                editMessage: {
+                    ...this.state.editMessage,
+                    msg: evt.target.value
+                }
+            }),
             messageValue: evt.target.value
         }, () => {
-            if (this.state.messageValue === '') {
+            if (this.state.messageValue === '' && !this.state.editMessage.msg) {
                 this.props.isTyping(false);
             }
         })
+    }
+
+    componentWillUnmount() {
+        Bus.unsubscribe('editMessage');
+        Bus.unsubscribe('messageSendingFinish');
     }
 
     render () {
@@ -93,7 +166,7 @@ class TextAreaMessage extends React.PureComponent {
                 <div className="message-send-container">
                     <textarea
                         ref={this.messageArea}
-                        value={this.state.messageValue}
+                        value={this.state.editMessage.msg || this.state.messageValue}
                         rows={this.state.rowLineCount}
                         onFocus={this.__userIsOnline}
                         onBlur={this.__userIsOffline}
@@ -102,6 +175,7 @@ class TextAreaMessage extends React.PureComponent {
                         placeholder="Type message..."
                         onKeyDown={this.__submitMessage}></textarea>
                     <SendIcon
+                        inProcessing={this.state.inProcessing}
                         sendMessage={this.__submitMessage}
                         value={this.state.messageValue}
                     />

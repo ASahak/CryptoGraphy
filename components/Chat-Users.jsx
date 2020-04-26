@@ -5,14 +5,16 @@ import UI_ELEMENTS from "components/shared/UI";
 import Skeleton from 'components/Skeleton';
 import {
     __GET_CHAT_USERS,
-    __ADD_NEW_MESSAGE,
+    __ADD_MESSAGE,
     __GO_PRIVATE_CHAT,
-    __CHANGE_IS_SEEN,
 } from 'store/saga';
-import debounce from "lodash.debounce";
 import {
+    __CHANGE_MOBILE_LIST_OPEN,
     __SET_ACTIVE_USER
 } from 'store/actions';
+import {
+    __detectCryptIcon
+} from 'components/shared/helpers/global-functions';
 import NoChatUsers from 'components/elements/NoChatUsers';
 import CommonRoom from 'components/elements/CommonRoom';
 import { connect } from 'react-redux';
@@ -23,7 +25,7 @@ const EveryUser = props => {
       <div
           onClick={() => props.goPrivateChat(props.id)}
           className={`user-messages-container ${props.isActiveUser === props.id ? 'active-user' : ''} 
-          ${props.dataMSG.letters.owner !== 'Me' && props.dataMSG.isSeen === false ? 'must-open-message' : ''}`}>
+          ${ props.dataMSG.letters.owner && props.dataMSG.letters.owner !== 'Me' && props.dataMSG.isSeen === false ? 'must-open-message' : ''}`}>
           <UI_ELEMENTS.UserImage
               firstName={props.dataMSG.fullName.split(' ')[0]}
               lastName={props.dataMSG.fullName.split(' ')[1] || ''}
@@ -31,14 +33,17 @@ const EveryUser = props => {
           />
           <div className="user-message-info">
               <div className="user-message-info_left">
-                  <h4>{props.dataMSG.fullName + (props.dataMSG.letters.owner !== 'Me' && props.dataMSG.isSeen === false ? ` ( ${props.dataMSG.countMessagesDelivered} )` : '')}</h4>
+                  <h4>{props.dataMSG.fullName + (props.dataMSG.letters.owner && props.dataMSG.letters.owner !== 'Me' && props.dataMSG.isSeen === false ? ` ( ${props.dataMSG.countMessagesDelivered} )` : '')}</h4>
                   {props.dataMSG.isTyping === true ?
                       <div className='spinner'>
                           <div className='bounce1'></div>
                           <div className='bounce2'></div>
                           <div className='bounce3'></div>
                       </div>:
-                      <p>{(props.dataMSG.letters && props.dataMSG.letters.message) ? props.dataMSG.letters.message : 'No messages yet'}</p>}
+                      <p>{(props.dataMSG.letters && props.dataMSG.letters.message) ?
+                          __detectCryptIcon(props.dataMSG.letters) ?
+                              <img src="./assets/images/key.png" alt="iconKey"/> :
+                              props.dataMSG.letters.message : 'No messages yet'}</p>}
               </div>
               <div className="user-message-info_right">
                   <span>{(props.dataMSG.letters && props.dataMSG.letters.time) ? moment(props.dataMSG.letters.time).fromNow() : ''}</span>
@@ -105,10 +110,14 @@ class ChatUsers extends React.Component {
             {...data},
             ...this.props.usersList
         ];
-        await __ADD_NEW_MESSAGE(data.id, {
-            time: null,
-            message: ''
-        }).next();
+        await __ADD_MESSAGE({my: {
+                friendId: data.id,
+                loggedUser: this.props.loggedUser,
+                msgData: {
+                    time: null,
+                    message: ''
+                }
+        }}).next();
         __GET_CHAT_USERS(_reverseArray).next();
         this.props.__SET_ACTIVE_USER(data);
         this.__moveToCommonRoom();
@@ -120,7 +129,10 @@ class ChatUsers extends React.Component {
     render () {
         return (
             <div className="chat-users">
-                <h4>{!this.state.commonRoom ? 'Your Messages' : <a onClick={this.__moveToCommonRoom}><span className="lnr lnr-chevron-left"></span> Back</a>}</h4>
+                <h4>{!this.state.commonRoom ?
+                    'Your Messages':
+                    <a onClick={this.__moveToCommonRoom}><span className="lnr lnr-chevron-left"></span> Back</a>}
+                    <span className="lnr lnr-arrow-left d-none_sm" onClick={() => this.props.__CHANGE_MOBILE_LIST_OPEN(false)}></span></h4>
                 <div className={`chat-room-wrapper ${!this.state.startedNewChat ? 'until-load-allowing' : ''}`}>
                     {!this.state.commonRoom ? <div className="users-messages-container">
                         {this.props.usersList === null ? new Array(8).fill('').map((_, i) => {
@@ -250,6 +262,49 @@ class ChatUsers extends React.Component {
                         white-space: nowrap;
                         font-size: 12px;
                     }
+                    .user-messages-container .user-message-info .user-message-info_left p > img{
+                        height: 15px;
+                    }
+                    .chat-room-wrapper {
+                        height: calc(100% - 41.5px);
+                    }
+                    .chat-room-wrapper .users-messages-container {
+                        overflow-x: hidden;
+                        max-height: calc(100% - 60px);
+                    } 
+                    .chat-room-wrapper .main-room-list {
+                        overflow-x: hidden;
+                        max-height: 100%;
+                    }
+                    .chat-room-wrapper .main-room-list::-webkit-scrollbar, .chat-room-wrapper .users-messages-container::-webkit-scrollbar {
+                        width: 0px;
+                        height: 10px;
+                    }
+                    
+                    .chat-room-wrapper .main-room-list::-webkit-scrollbar-thumb, .chat-room-wrapper .users-messages-container::-webkit-scrollbar-thumb {
+                        background: transparent;
+                    }
+                    .chat-room-wrapper .main-room-list::-webkit-scrollbar-track, .chat-room-wrapper .users-messages-container::-webkit-scrollbar-track {
+                        background: transparent;
+                    }
+                    .d-none_sm {
+                        display: none;
+                    }
+                    .chat-users > h4 .lnr-arrow-left {
+                        font-size: 26px;
+                        cursor: pointer;
+                    }
+                    @media screen and (max-width: 767px) {
+                        .d-none_sm {
+                            display: block;
+                        }
+                        .chat-users {
+                            opacity: ${this.props.mobileUsersListOpen ? 1 : 0};
+                            transition: .2s;
+                            overflow: hidden;
+                            width: ${this.props.mobileUsersListOpen ? 100 : 0}%;
+                        }
+                    }
                 `}</style>
             </div>
         )
@@ -259,11 +314,13 @@ class ChatUsers extends React.Component {
 const mapStateToProps = state => ({
     loggedUser: state.chat.loggedUser,
     usersList: state.chat.myChatUsers,
-    activeUser: state.chat.activeUser
+    activeUser: state.chat.activeUser,
+    mobileUsersListOpen: state.chat.mobileUsersListOpen,
 });
 
 const mapDispatchToProps = {
-    __SET_ACTIVE_USER
+    __SET_ACTIVE_USER,
+    __CHANGE_MOBILE_LIST_OPEN,
 };
 
 export default connect(

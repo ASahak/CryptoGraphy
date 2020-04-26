@@ -6,7 +6,8 @@ import {
     SET_USER_MESSAGES,
     LOAD_MORE_MESSAGES,
     STATUS_MODAL,
-    SET_ENCRYPT_DATA
+    SET_ENCRYPT_DATA,
+    CHANGE_MOBILE_LIST_OPEN,
 } from '../types';
 
 const chat = (state = {}, action) => {
@@ -27,6 +28,8 @@ const chat = (state = {}, action) => {
             return {...state, messagesPage: state.messagesPage += action.payload};
         case SET_USER_MESSAGES:
             return {...state, activeUserMessages: action.payload};
+        case CHANGE_MOBILE_LIST_OPEN:
+            return {...state, mobileUsersListOpen: action.payload};
         case MY_DATA:
             return {...state, loggedUser: action.payload};
         case MY_USERS:

@@ -8,7 +8,7 @@ import fire from "config/fire";
 import Alert from "components/shared/UI/Alert";
 import Router from 'next/router';
 import * as authService from "utils/auth-service";
-import { __bodyLoading, __getRandomColor } from 'components/shared/helpers/global-functions';
+import { __bodyLoading } from 'components/shared/helpers/global-functions';
 import { connect } from 'react-redux';
 import {
     __CHANGE_STATUS_IS_LOADING
@@ -30,7 +30,7 @@ function RegisterForm () {
                 id: '',
                 fullName: data.name,
                 email: data.email,
-                color: __getRandomColor(),
+                color: data.favorite_color,
                 messages: []
             }).then(_ => {
                 const docUsers = db.doc(`users/${_.id}`);
@@ -114,6 +114,19 @@ function RegisterForm () {
                 fullWidth={true}
                 placeholder="Confirm Password"
                 size="md" />
+            <div className="favorite-color-container">
+                <label>Your Favorite Color</label>
+                <UI_ELEMENTS.Input
+                    refBind ={register({
+                        required: "Favorite color is required",
+                    })}
+                    errors={errors.favorite_color && errors.favorite_color.message}
+                    name="favorite_color"
+                    type="color"
+                    fullWidth={true}
+                    placeholder="Your favorite color"
+                    size="md" />
+            </div>
             <UI_ELEMENTS.Button
                 icon={loadingRegister ? {dir: 'right', element: 'loading'} : {}}
                 type="submit"
@@ -123,6 +136,18 @@ function RegisterForm () {
             <Link href="/login" prefetch={false}>
                 <a className="link-to-reset">I have an account already. Go to login</a>
             </Link>
+            <style jsx>{`
+                .favorite-color-container {
+                    position: relative;
+                }
+                .favorite-color-container label{
+                    position: absolute;
+                    color: #000;
+                    z-index: 22;
+                    top: 10px;
+                    left: 15px;                    
+                }
+            `}</style>
         </form>
     )
 }
