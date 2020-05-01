@@ -61,7 +61,7 @@ class ChatMessages extends React.Component {
         return (
             <div className="chat-messages">
                 <div className="select-bar">
-                    <span className="lnr lnr-menu d-none_sm" onClick={() => this.props.__CHANGE_MOBILE_LIST_OPEN(true)}></span>
+                    <span className={`lnr lnr-menu d-none_sm ${this.props.mobileNotifyNewMsg ? 'new-mobile-msg' : ''}`} onClick={() => this.props.__CHANGE_MOBILE_LIST_OPEN(true)}></span>
                     <UI_ELEMENTS.Select
                         selectEncrypt={this.__selectEncrypt}
                         placeholder="Please choose encrypt type"
@@ -154,13 +154,26 @@ class ChatMessages extends React.Component {
                     .d-none_sm {
                         display: none;
                     }
+                    .new-mobile-msg {
+                        position: relative;
+                    }
+                    .new-mobile-msg:after {
+                        content: "";
+                        position: absolute;
+                        top: 0px;
+                        right: -3px;
+                        width: 10px;
+                        height: 10px;
+                        background: red;
+                        border-radius: 50%;
+                    }
                     @media screen and (max-width: 767px) {
                         .d-none_sm {
                             display: block;
                         }
                         .chat-messages {
                             opacity: ${!this.props.mobileUsersListOpen ? 1 : 0};
-                            transition: .2s;
+                            transition: width .2s;
                             overflow: hidden;
                             width: ${!this.props.mobileUsersListOpen ? 100 : 0}%;
                         }
@@ -175,6 +188,7 @@ const mapStateToProps = state => ({
     isShowModal: state.chat.isShowModal,
     encryptData: state.chat.encryptData,
     mobileUsersListOpen: state.chat.mobileUsersListOpen,
+    mobileNotifyNewMsg: state.chat.mobileNotifyNewMsg,
 });
 const mapDispatchToProps = {
     __CHANGE_STATUS_MODAL,

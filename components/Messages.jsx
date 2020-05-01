@@ -71,7 +71,6 @@ class Messages extends React.Component {
             const startTime = new Date().getTime();
             const genMessages = await __GET_ACTIVE_USERS_MESSAGES(this.props.activeUser?.id).next();
             const endTime = new Date().getTime();
-
             this.__updateStateContent(genMessages.value.letters[0].message, endTime, startTime);
         } else if (prevProps.activeUser?.id !== this.props.activeUser?.id && this.props.activeUser?.id) {
             this.setState({

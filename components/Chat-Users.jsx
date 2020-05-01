@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as moment from 'moment';
 import UI_ELEMENTS from "components/shared/UI";
@@ -10,7 +10,8 @@ import {
 } from 'store/saga';
 import {
     __CHANGE_MOBILE_LIST_OPEN,
-    __SET_ACTIVE_USER
+    __SET_ACTIVE_USER,
+    __SEND_MOBILE_MESSAGE_NOTIFY,
 } from 'store/actions';
 import {
     __detectCryptIcon
@@ -66,8 +67,8 @@ class ChatUsers extends React.Component {
             commonRoom: false,
             startedNewChat: true,
         };
-        this.__moveToCommonRoom = this.__moveToCommonRoom.bind(this);
-        this.__goPrivateChat    = this.__goPrivateChat.bind(this);
+        this.__moveToCommonRoom          = this.__moveToCommonRoom.bind(this);
+        this.__goPrivateChat             = this.__goPrivateChat.bind(this);
         Bus.subscribe('startChat', (data) => this.__startPrivateChat(data))
     }
 
@@ -76,6 +77,13 @@ class ChatUsers extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.usersList instanceof Array) {
+            if (this.props.usersList.some(user => (user.isSeen === false && user.isSender === false))) {
+                this.props.__SEND_MOBILE_MESSAGE_NOTIFY(true);
+            } else {
+                this.props.__SEND_MOBILE_MESSAGE_NOTIFY(false);
+            }
+        }
         if (prevProps.usersList !== this.props.usersList) {
             this.props.__SET_ACTIVE_USER(this.props.activeUser.id ? this.props.activeUser : this.props.usersList[0])
         }
@@ -93,6 +101,7 @@ class ChatUsers extends React.Component {
     }
 
     async __goPrivateChat (idUser) {
+        this.props.__CHANGE_MOBILE_LIST_OPEN(false);
         this.setState({
             startedNewChat: false
         });
@@ -300,7 +309,7 @@ class ChatUsers extends React.Component {
                         }
                         .chat-users {
                             opacity: ${this.props.mobileUsersListOpen ? 1 : 0};
-                            transition: .2s;
+                            transition: ${!this.props.mobileUsersListOpen ? 'width': ''} .2s;
                             overflow: hidden;
                             width: ${this.props.mobileUsersListOpen ? 100 : 0}%;
                         }
@@ -321,6 +330,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     __SET_ACTIVE_USER,
     __CHANGE_MOBILE_LIST_OPEN,
+    __SEND_MOBILE_MESSAGE_NOTIFY,
 };
 
 export default connect(

@@ -65,7 +65,9 @@ class PrivateMessageContent extends React.PureComponent{
         });
     }
     __scrollToBottom (behavior) {
-        this._messagesEnd.scrollIntoView({ behavior: (behavior ? 'smooth' : 'auto')});
+        setTimeout(() => {
+            this._messagesEnd?.scrollIntoView({ behavior: (behavior ? 'smooth' : 'auto')});
+        }, 0)
     }
 
     __handleScrollTop (e) {
@@ -170,7 +172,7 @@ class PrivateMessageContent extends React.PureComponent{
     }
 
     __removeMessage (time) {
-        __REMOVE_MESSAGE(this.props.messages.findIndex(msg => msg.time === time), {idUser: this.props.activeUser?.id, myId: this.props.loggedUser?.id}).next();
+        __REMOVE_MESSAGE(time, {idUser: this.props.activeUser?.id, myId: this.props.loggedUser?.id}).next();
     }
 
     __clickRemovePopUp (evt) {
@@ -186,20 +188,47 @@ class PrivateMessageContent extends React.PureComponent{
         //     this.props.activeUser.isTyping && this.__scrollToBottom('behavior');
         // }
 
+        // Detect if there are removed message
+        if (this.props.activeUser?.removedMessageIndex >= 0 &&
+            (prevProps.messages[this.props.activeUser.removedMessageIndex]?.removed !== this.props.messages[this.props.activeUser.removedMessageIndex]?.removed ||
+            !(() => {
+                const currentIndex = this.state.messagesSelector.length - (this.props.messages.length - this.props.activeUser.removedMessageIndex);
+                if (currentIndex < 0) return false;
+                return this.state.messagesSelector[currentIndex]?.removed
+            })())
+        ) {
+            const currentIndex = this.state.messagesSelector.length - (this.props.messages.length - this.props.activeUser.removedMessageIndex);
+            if (currentIndex >= 0) {
+                const newEncryption = [...this.state.messagesSelector];
+                if (newEncryption[currentIndex]) {
+                    newEncryption[currentIndex].removed = true;
+                    this.setState({
+                        messagesSelector: newEncryption
+                    })
+                }
+            }
+        }
+
         // when editing have been finished
         if (this.props.activeUser?.editedMsgIndex >= 0 &&
-            this.props.messages[this.props.activeUser?.editedMsgIndex].message !== prevProps.messages[this.props.activeUser?.editedMsgIndex].message
+            (this.props.messages[this.props.activeUser?.editedMsgIndex].message !== prevProps.messages[this.props.activeUser?.editedMsgIndex].message ||
+            (() => {
+                const currentIndex = this.state.messagesSelector.length - (this.props.messages.length - this.props.activeUser?.editedMsgIndex);
+                if (currentIndex < 0) return false;
+                return this.state.messagesSelector[currentIndex].message !== this.props.messages[this.props.activeUser?.editedMsgIndex].message;
+            })())
         ) {
             const currentIndex = this.state.messagesSelector.length - (this.props.messages.length - this.props.activeUser?.editedMsgIndex);
-
-            const editedArray = [...this.state.messagesSelector];
-            editedArray[currentIndex] = this.props.messages[this.props.activeUser?.editedMsgIndex];
-            this.setState({
-                isEditing: false,
-                isRemoving: false,
-                editingMsgIndex: null,
-                messagesSelector: editedArray
-            });
+            if (currentIndex >= 0) {
+                const editedArray = [...this.state.messagesSelector];
+                editedArray[currentIndex] = this.props.messages[this.props.activeUser?.editedMsgIndex];
+                this.setState({
+                    isEditing: false,
+                    isRemoving: false,
+                    editingMsgIndex: null,
+                    messagesSelector: editedArray
+                });
+            }
         }
         // Sending notification when there was not any messages
         if (this.props.messages.length === 1 && this.props.messages[0].message === '' || prevProps.messages.length === 1 && prevProps.messages[0].message === '') {
@@ -271,6 +300,7 @@ class PrivateMessageContent extends React.PureComponent{
                                     lastName={_dataMSG.fullName.split(' ')[1] || ''}
                                     fill={_dataMSG.color}
                                 />
+                                {message.removed ? <div className="removed-message">Removed message</div> :
                                 <div className={`message-time ${__detectCryptIcon(message) ? 'crypt-message' : ''}`}
                                      data-message-type={message.encryptType}
                                      data-message-key={message.key}>
@@ -306,7 +336,7 @@ class PrivateMessageContent extends React.PureComponent{
                                     <span className="time-wrap">{moment(+message.time).format('lll')}</span>
                                     {_isOwner ? (index === this.state.messagesSelector.length - 1) ? this.props.activeUser.isSeen ?
                                         <div className="status-message">Seen</div>: <div className="status-message">Delivered</div> : '' : ''}
-                                </div>
+                                </div>}
                             </div>
                         )
                     })}
@@ -384,6 +414,25 @@ class PrivateMessageContent extends React.PureComponent{
                         padding: 5px 10px;
                         max-width: 50%;
                         position: relative;
+                    }
+                    .content-left_owner .removed-message, .content-right_owner .removed-message {
+                        padding: 5px 10px;
+                        max-width: 50%;
+                        position: relative;
+                        background-color: #d9d7d7;
+                        border-radius: 6px;
+                        font-size: 14px;
+                        height: 27px;
+                        font-style: italic;
+                        color: #767575;
+                        margin-top: 5px;
+                        margin-bottom: 10px;
+                    }
+                    .content-left_owner .removed-message {
+                        margin-left: 10px;
+                    }
+                    .content-right_owner .removed-message {
+                        margin-right: 10px;
                     }
                     .content-right_owner .message-time {
                         display: flex;

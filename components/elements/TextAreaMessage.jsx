@@ -77,7 +77,9 @@ class TextAreaMessage extends React.PureComponent {
             });
         });
         addEventListener('blur', () => {
-            this.props.isTyping(false);
+            if (this.state.editMessage.hasOwnProperty('mainObj') && !this.state.editMessage.msg) {
+                this.props.isTyping(false);
+            }
         })
     }
 

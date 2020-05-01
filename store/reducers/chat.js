@@ -8,6 +8,7 @@ import {
     STATUS_MODAL,
     SET_ENCRYPT_DATA,
     CHANGE_MOBILE_LIST_OPEN,
+    SEND_MOBILE_MESSAGE_NOTIFY,
 } from '../types';
 
 const chat = (state = {}, action) => {
@@ -34,6 +35,8 @@ const chat = (state = {}, action) => {
             return {...state, loggedUser: action.payload};
         case MY_USERS:
             return {...state, myChatUsers: action.payload};
+        case SEND_MOBILE_MESSAGE_NOTIFY:
+            return {...state, mobileNotifyNewMsg: action.payload};
         case ALL_USERS:
             action.payload && state.myChatUsers.map(item => {
                 action.payload.splice(action.payload.findIndex(el => el.id === item.id), 1);

@@ -14,6 +14,7 @@ const state = {
         allChatUsers: null,
         activeUserMessages: [],
         mobileUsersListOpen: false,
+        mobileNotifyNewMsg: false,
         messagesPage: 1,
         encryptData: {
             disabled: false,

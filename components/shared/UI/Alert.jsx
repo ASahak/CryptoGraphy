@@ -10,9 +10,7 @@ function Alert (props) {
 
     const showTimeout = setTimeout(() => {
         setAlertShow(false);
-        console.log(alertRef.current, domElement.contains(alertRef.current), domElement);
         if (alertRef.current && domElement.contains(alertRef.current)) {
-        console.log('mtav')
             alertRef.current.remove();
         }
     }, props.timeout);
