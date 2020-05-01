@@ -8,7 +8,9 @@ import {
     SET_USER_MESSAGES,
     LOAD_MORE_MESSAGES,
     STATUS_MODAL,
-    SET_ENCRYPT_DATA
+    SET_ENCRYPT_DATA,
+    CHANGE_MOBILE_LIST_OPEN,
+    SEND_MOBILE_MESSAGE_NOTIFY,
 } from '../types';
 
 export const __CHANGE_IS_LOGGED = (payload) => ({
@@ -56,5 +58,13 @@ export const __CHANGE_STATUS_MODAL = () => ({
 
 export const __SET_ENCRYPT_DATA = (payload) => ({
     type: SET_ENCRYPT_DATA,
+    payload
+});
+export const __CHANGE_MOBILE_LIST_OPEN = (payload) => ({
+    type: CHANGE_MOBILE_LIST_OPEN,
+    payload
+});
+export const __SEND_MOBILE_MESSAGE_NOTIFY = (payload) => ({
+    type: SEND_MOBILE_MESSAGE_NOTIFY,
     payload
 });

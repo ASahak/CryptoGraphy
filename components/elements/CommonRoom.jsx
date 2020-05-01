@@ -57,7 +57,7 @@ const CommonRoom = props => {
     }, []);
 
     return (
-        <div className={!props.startedNewChat ? 'until-load-allowing' : ''}>
+        <div className={`${!props.startedNewChat ? 'until-load-allowing' : ''} main-room-list`}>
             {props.usersList === null && new Array(8).fill('').map((_, i) => {
                 return (
                     <div className="skeleton-container" key={i + Math.random().toString(16).slice(2, 6)} style={{opacity: (8 - i) * 0.09}}>

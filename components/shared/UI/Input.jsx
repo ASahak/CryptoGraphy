@@ -95,6 +95,10 @@ const Input = (props) => {
                     font-size: 14px;
                     color: red;
                 }
+                .input-wrap input[type=color]{
+                    height: 46px;
+                    padding: 6px 15px 6px 85%!important;
+                }
                 .input-wrap input.input-md{
                     padding: 15px;
                     border: none;

@@ -42,8 +42,8 @@ export default createGlobalStyle`
       #portal {
         position: fixed;
         right: 0;
-        width: 300px;
-        height: 100vh;
+        max-width: 300px;
+        max-height: 100vh;
         overflow: hidden;
         display: flex;
         flex-direction: column;

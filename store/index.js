@@ -13,6 +13,8 @@ const state = {
         myChatUsers: null,
         allChatUsers: null,
         activeUserMessages: [],
+        mobileUsersListOpen: false,
+        mobileNotifyNewMsg: false,
         messagesPage: 1,
         encryptData: {
             disabled: false,
