@@ -3,6 +3,7 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
+    distDir: "dist",
     cssModules: true,
     webpack: (config, options) => {
         config.module.rules.push({
