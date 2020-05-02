@@ -9,7 +9,9 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start -p $PORT",
+    "start": "next start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
