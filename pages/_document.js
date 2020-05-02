@@ -12,7 +12,7 @@ class MyDocument extends Document {
             <Html>
                 <Head>
                     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css" />
-                    <link rel="icon" href="/favicon.ico" />
+                    <link rel="icon" href="../public/favicon.ico" />
                 </Head>
 
                 <body>

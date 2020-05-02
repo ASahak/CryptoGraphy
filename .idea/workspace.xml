@@ -5,194 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/BUILD_ID" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/build-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/00f522fb1560d0b55b1babf4b2a5565d.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/01c74d51acd8bad33224bd92c91522e3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/0206906a6496dc0061226650ff608c2e.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/0257e9fbb4e734927e027bf1cb5c9626.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/040917b49724d6443f03d7daecdd04ac.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/0759044f5d6b3f357c621a2930d2941f.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/077d6b487ac250a72b4b015e6bf45107.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/0799593ca209576cbf861a9c5de43a57.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/07bb28214c07a572efe61b3fab00cc13.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/080ef51e260e59be7723547986c15f75.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/0ab20fcc20b4518a3ce7d916c04d2e77.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/0b72d973dfd88ea2b2c850c97df5bd15.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/0d7b583dc7628d0e9ead363ce9109ee3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/0f37b43f87f26f749360d2d83c27e34e.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/1144791cdcdcf52e2e04260e19dfcbf9.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/1179a572243080de7f26a4b027adaf76.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/142ead7d8746550ec7a1a0719710cc24.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/159475a66ca9080d55224a8446d44837.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/1808661db507bc3cc7def8eb9f82dcc3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/1c01b534e72e16b2dd382e2809727a75.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/1f30afd2a6717f3fc294fd292174cec4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/1f7de6019bdcda1b035df98ce6f9c6d8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/20bf20e9b6be7797c5f013f7d1b7e4f8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/210fdb43f125bc53440faf05d22ac925.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/229542fed08872f2a5b6262466eca409.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/23c51e28bc1aed17a70d90ac96a4c420.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/2956a6f56354cc49a286a00aa3a51a89.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/2b165d261b4543abd3f5212a9489c58d.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/2b9bbc47b75c9f7be05f19203f424369.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/2bdba5a9f348e5547b8fe87246123c88.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/2c480670dbfafa57a47de91439b76a60.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/2c7bce13513c11f43ce162cc247bf79a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/2e62ae2c3b7478cfc37af3f346f8103c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/2ec91c946a8433729a721889420753d8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/2ef102375831b9b08958dc8718aa1e86.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3079aaa54d3428e9b1140ddd29cf8b97.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/32ce632dd1d3b69f4319eb967b64f1e0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/34951f9025337a5e3f4d029be32c04e0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/352322aab818c4b9c07c21795e92b9b3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3789458f0898d0b3cb6aa09869864659.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3824c36d430b22077489df2327754e4a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3a1dcf51d2e50def85d0e38f8f69bef8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3a393ae9c238f0b2d59f94b79f0edffb.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3ba973c8c3a62d5a0ffa956de3ade057.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3d587b8dc8cb4b7bb3f1dc8cf3980b34.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3dddd70537ef741145c94160209d63b6.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3ed8de8a9f7cc0256fbcf262b587755e.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/3f7dee6e728bcaec065aa42788ad9267.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/406f203a39de90b1377bf9712336ecd6.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/4255b62855c9b75f89d28cf802c1395c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/444be51e4620d409fb0027fe4018f927.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/468698e975eef356d7c0a5d68a9d575b.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/470e4a7945d97729b0f511133d121fc3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/48722c265e171ff751dd25e46f48cc8c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/4a562576244db360b3af437ac59443f7.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/4f467610610ee9ff2a7f6fcd2bc6015c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/54c1cfdcc0b61c54d0ec7e1d4067c4b3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/58e9c46c36e41aacfdbda9a9ad6a4c8b.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/5954ae3382f646ac766f0efb2c07d4ca.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/5a2a472588b391564807325e9cf74cec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/5ae9ed845a683251428e0524e21d7322.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/5cebaf4978369171b01879c73a430e0a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/60164c919cd5aaacfbe6c4ceb2f404a8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/60567b5267303e1d6f30787d5baee5a8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/620f4e2deeb4b6422751431618efb96c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/629ea21de9cb0589a1c6052bf2142d91.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/66a6fed90efa7adfc9ad6f2a8dd2349b.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/6cd41c45090b7b480f2c11a81cc16c73.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/6da12d27fbccee7175f15bcf0395a7e7.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/6f09a3885cacb76390a22bdba7fe56e2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/6f09d76e6edef6cbf9e89b57e6a3e6c9.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/743d46b2506bb28e2d7201772b1928b3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/749cc3321721e81a9dd07330330174a4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/74ebc1d1f4ff85b8d2a711bdeaf8bad8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/757afbdd20a21959c9791ed04b7fc284.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/75e0354bb2ed2e954c7dfa4d8b805e3c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/790d1af8d7a5ee64bdf313d2c3f89950.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/79d5608806d93913c321fd216c57c5db.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/7baec8380729de3c0c565f8c8e51beae.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/7bd15e74a63a2d2a77c936a90be574e2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/7ecf36debc492a8c69b503a77650e3a0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/7f2379671db082cadddb00338fe2ebee.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/840174ae9f4b0878ac73ae20f1477839.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/84018013dc841887c9152d88320634db.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/848a0b0ecd1706a098cb8fadd989441e.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/864541b77bfbe3e2c2735632cb9f6181.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/873f885af4f1dd78cd978b5b84773ffb.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/879669742c747b4df9aec0eb506d2576.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/8ad0103e88ad9412a281171a7d85bb1d.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/8b5dfbd4e0104c3fb94a037f279c6814.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/8bf6418bb421d5613907a732595b8966.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/8c409af1a4b37608f570bd2dca2e78aa.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/8d30aad0537a29e57a1bd9e68b006a2d.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/8db8b6a0255959d3ebeee20a78fc015b.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/8ee9f3db18c2e95fea5e27cdcf589b32.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/90a5801beb9e35ed4a7a1e0ee84e2681.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/91456fdb045a11be8ea40862c1cc78b8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/923126ee819dcfbc0c60ede777ed25f7.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/92f06b35b7b55f6b57f3a5ed56ed2992.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/95ffd40aa1ccf44cf23e889bd16332b5.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/973262f333a366506e663fcae6b5addc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/98b899ce10d79792c4ed24dd65de70fb.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/98bdc4cf1fab5e4809447fcc6f3c8733.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/99348ea04e7ad8afd795a99c2b996dcb.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/9bde9ea54bda0d1768bb79d3b77ff6ee.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/9e5540153e7046ac83164326ec9b1c02.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/a16734f4155dd54132a58bf8f5637b98.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/a235a370e33702cba89460c270be8db0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/a256ffe9a0ef39c5977e6ca8952108d2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/a49971d17fcb290e3d9c10f256d707b7.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/a53ee66cca0c7166bb4da4266b45a77a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/a72856e15e2a614f7c2feccf3a89ea97.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/a945bbfded9eaec8f8b6cb436173fff6.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/a9f03ccb66c123721fd44af572325ab8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/acbf5a26d1bc397e1097355498fe1ae2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/ade86fd888b19c1fb1a3166081b6ebed.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/ae0c4269d4135d7de4a268e19fe3a90c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/b101d9c90408011167f0acf133bbc1ba.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/b2362b4c9ed2b73710997a98e98da476.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/b3834255a1513c722c31dda1bf70051b.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/b3a8282b13adf03bf1abb036025ddb3a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/b53d292fe8d455b0d5df3d81ffd92e23.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/bd441fcb43dcf8f46d11cee34cb7cf4b.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/bf53a985b36fb7c41f8e6006223a8789.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/c20d1eb56c7117bf9adbacd9e79ab8af.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/c3a9ffc69dc1d990bf8d0871d419adf3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/c4c2c5ad12a4aaf9870f639df0425079.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/c83717bb8f7dbe2846ca1d98edfda2d0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/cbaca5ec59b87373a00d53694fc8a7ed.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/cca3735a8a2a96a565976b54ab446973.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/cd1b8cc3707386deae526ebb1201867f.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/d13ffcd0b11956a2ee37b5d07ec99f05.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/d143ddd0780e22d1691d0e002395dc38.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/d1f0411be92d24149ae08767a5f9a022.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/d417a21034b478383a5992e5d276b0bd.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/d4439b934a01c2b9676d5a78807fe1ac.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/d58031571dfd7f2dd6a8a3a01f7571d5.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/d75f9419ac3ce447ab1828172a9298fb.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/d92fdf4ac26a61c7ce46b6ba6d5da420.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/da26a92f2e9e730be8b2eb40517a52d4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/daf9327824c3e1a12b54b2cd6eedd709.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/db50e1896d410f4cd3ccea33073b452f.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/db7199cc0bae70add582a1c60ba6fa61.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/e451e214448cea2e6b3b6185c836b3fb.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/e7055cef20e8cadcfbcf351a8505c7f3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/e7277fcace9130e61d9671e1c2bf6ba3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/e802f0be7326c89f18c55e170cd422be.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/ea4cde2859fc774b26e2452a2cf87223.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/ec6c949fe14434ea5769085a9cfcc785.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/ed7cb833da8592f255b435b029c34460.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/ee5fef0b2391a3d8bcf278cf601cef35.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/ef0d79309953d5bb61f7dd3042687586.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/f12cf2cb1feaf112570764c6ce268ea0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/f3b06adeec2e24001af9eb395b0ca2a9.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/f50e848cbd8dd7fc911992938dca7b2d.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/f8a79beadbcd98821d601e3e956055de.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/f92bd575865564ae6aaf8adfb67795eb.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/f972413813e44f1501b73e0f95ce03cc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/fab1e107447a4c643f292ca888d2d7a7.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-babel-loader/fedd394195dc386e7de93891fe54f4b4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-minifier/a1662584520" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-minifier/a186337383" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-minifier/a2325353022" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-minifier/a233569423" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-minifier/a3213794123" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-minifier/a3343401860" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-minifier/a3771720331" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-minifier/a4132057222" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cache/next-minifier/a433099722" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/export-marker.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/prerender-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/react-loadable-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/init-server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/on-error-server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/pages-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/ssr-module-cache.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/484bcb1e.6969fbe37fc15cbfda7a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/commons.d943d8fd351b3395bc1b.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/ff239f9d.bbcff2a7898e555b8638.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/framework.5a6fd18fd7776ae00af7.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/runtime/main-19a16e2bade3197235c7.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/runtime/polyfills-ca767adcfe74e5592607.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/runtime/webpack-91b117697e716c22a78b.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_document.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_document.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -209,8 +24,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="8" column="39" lean-forward="true" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+            <state relative-caret-position="261">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/_app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="70">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/_document.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -219,8 +55,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>letter</find>
-      <find>cancelEditing</find>
       <find>SET_USER_MESSAGES</find>
       <find>activeUserMessages</find>
       <find>__ADD_MESSAGE</find>
@@ -249,6 +83,8 @@
       <find>#portal</find>
       <find>console</find>
       <find>edited</find>
+      <find>/favicon.ico</find>
+      <find>react-redux</find>
     </findStrings>
     <replaceStrings>
       <replace>__CHANGE_STATUS_IS_LOADING</replace>
@@ -283,7 +119,6 @@
         <option value="$PROJECT_DIR$/components/Icons/Locked.js" />
         <option value="$PROJECT_DIR$/libraries/Vernam.js" />
         <option value="$PROJECT_DIR$/libraries/ROT13.js" />
-        <option value="$PROJECT_DIR$/pages/_document.js" />
         <option value="$PROJECT_DIR$/libraries/Subsutuation.js" />
         <option value="$PROJECT_DIR$/libraries/index.js" />
         <option value="$PROJECT_DIR$/libraries/Subsituation.js" />
@@ -311,6 +146,7 @@
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/next.config.js" />
         <option value="$PROJECT_DIR$/Procfile" />
+        <option value="$PROJECT_DIR$/pages/_document.js" />
         <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
@@ -333,6 +169,16 @@
               <item name="encrypt" type="b2602c69:ProjectViewProjectNode" />
               <item name="encrypt" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="encrypt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="encrypt" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="encrypt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="encrypt" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -344,7 +190,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ASahak/daser/Angular component/fram-shop" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -355,11 +201,12 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.1.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ruala\Desktop\next\encrypt" />
+      <recent name="C:\Users\ruala\Desktop\next\encrypt\pages" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\ruala\Desktop\next\encrypt\components\shared\UI" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\ruala\Desktop\next\encrypt\pages" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -425,18 +272,18 @@
       <workItem from="1588225424079" duration="9676000" />
       <workItem from="1588310817926" duration="4576000" />
       <workItem from="1588403693324" duration="6951000" />
-      <workItem from="1588416277177" duration="106000" />
+      <workItem from="1588416277177" duration="1557000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="615110000" />
+    <option name="totallyTimeSpent" value="616561000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18374091" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18374091" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -450,7 +297,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.47733712" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50033045" side_tool="true" weight="0.2266289" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49966952" visible="true" weight="0.33994335" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49966952" visible="true" weight="0.33994335" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.3286119" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -551,8 +398,6 @@
     <entry file="file://$PROJECT_DIR$/components/header.jsx" />
     <entry file="file://$PROJECT_DIR$/libraries/RSA.js" />
     <entry file="file://$PROJECT_DIR$/libraries/ROT13.js" />
-    <entry file="file://$PROJECT_DIR$/pages/_document.js" />
-    <entry file="file://$PROJECT_DIR$/pages/_app.js" />
     <entry file="file://$PROJECT_DIR$/libraries/index.js" />
     <entry file="file://$PROJECT_DIR$/libraries/Vigenere.js" />
     <entry file="file://$PROJECT_DIR$/libraries/Subsituation.js" />
@@ -589,10 +434,27 @@
     <entry file="file://$PROJECT_DIR$/next.config.js" />
     <entry file="file://$PROJECT_DIR$/server.js" />
     <entry file="file://$PROJECT_DIR$/Procfile" />
+    <entry file="file://$PROJECT_DIR$/pages/_document.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/_app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="8" column="39" lean-forward="true" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+        <state relative-caret-position="261">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
