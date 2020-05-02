@@ -144,7 +144,7 @@ class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_2___default.a {
       className: "jsx-2239707107"
     }), __jsx("link", {
       rel: "icon",
-      href: "/favicon.ico",
+      href: "../public/favicon.ico",
       className: "jsx-2239707107"
     })), __jsx("body", {
       className: "jsx-2239707107"
