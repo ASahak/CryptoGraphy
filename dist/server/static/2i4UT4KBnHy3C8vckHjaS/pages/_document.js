@@ -142,10 +142,6 @@ class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_2___default.a {
       rel: "stylesheet",
       href: "https://cdn.linearicons.com/free/1.0.0/icon-font.min.css",
       className: "jsx-2239707107"
-    }), __jsx("link", {
-      rel: "icon",
-      href: "../public/favicon.ico",
-      className: "jsx-2239707107"
     })), __jsx("body", {
       className: "jsx-2239707107"
     }, __jsx(next_document__WEBPACK_IMPORTED_MODULE_2__["Main"], null), __jsx("div", {
