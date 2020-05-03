@@ -2,9 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9cfb4be-27ed-40fd-a7f1-494d503d518a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encrypt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encrypt.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_document.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_document.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/BUILD_ID" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/build-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/export-marker.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/prerender-manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/react-loadable-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/react-loadable-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes-manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/init-server.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/init-server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/on-error-server.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/on-error-server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/pages-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/ssr-module-cache.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/ssr-module-cache.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/_app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/_document.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/_error.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/_errors/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/reset-password.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/_buildManifest.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/_app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/_error.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/register.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/reset-password.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/chunks/484bcb1e.6969fbe37fc15cbfda7a.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/chunks/49325e24edd17e9f47e0004647962d95cc3b653d.3fd6e940399b6b786780.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/chunks/7e9cbcf7a1775b6508fbf4cfca347f018bbd3937.01e10315aba7f4cdec2c.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/chunks/8673774c.11b3be935b8df6869a06.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/chunks/commons.d943d8fd351b3395bc1b.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/chunks/ff239f9d.bbcff2a7898e555b8638.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/chunks/framework.5a6fd18fd7776ae00af7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/runtime/main-19a16e2bade3197235c7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/runtime/polyfills-ca767adcfe74e5592607.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/static/runtime/webpack-91b117697e716c22a78b.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,11 +50,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="34" column="31" lean-forward="true" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+            <state relative-caret-position="98">
+              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -29,7 +62,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/_app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="70">
+            <state relative-caret-position="14">
               <caret line="5" selection-start-line="5" selection-end-line="5" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -38,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/_document.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="7" column="5" lean-forward="true" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+            <state relative-caret-position="236">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
             </state>
           </provider>
         </entry>
@@ -142,8 +175,8 @@
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/next.config.js" />
         <option value="$PROJECT_DIR$/Procfile" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/pages/_document.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -158,23 +191,28 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="encrypt" type="b2602c69:ProjectViewProjectNode" />
-              <item name="encrypt" type="462c0819:PsiDirectoryNode" />
+              <item name="CryptoGraphy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CryptoGraphy" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="encrypt" type="b2602c69:ProjectViewProjectNode" />
-              <item name="encrypt" type="462c0819:PsiDirectoryNode" />
+              <item name="CryptoGraphy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CryptoGraphy" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CryptoGraphy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CryptoGraphy" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -264,11 +302,12 @@
       <workItem from="1588310817926" duration="4576000" />
       <workItem from="1588403693324" duration="6951000" />
       <workItem from="1588416277177" duration="3097000" />
+      <workItem from="1588502265213" duration="692000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="618101000" />
+    <option name="totallyTimeSpent" value="618793000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -401,13 +440,7 @@
     <entry file="file://$PROJECT_DIR$/pages/register.js" />
     <entry file="file://$PROJECT_DIR$/components/elements/CommonRoom.jsx" />
     <entry file="file://$PROJECT_DIR$/components/Chat-Content.jsx" />
-    <entry file="file://$PROJECT_DIR$/node_modules/firebase/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2226">
-          <caret line="7341" column="4" selection-start-line="7341" selection-start-column="4" selection-end-line="7341" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/firebase/index.d.ts" />
     <entry file="file://$PROJECT_DIR$/components/shared/UI/Input.jsx" />
     <entry file="file://$PROJECT_DIR$/components/elements/TextAreaMessage.jsx" />
     <entry file="file://$PROJECT_DIR$/store/actions/index.js" />
@@ -425,16 +458,9 @@
     <entry file="file://$PROJECT_DIR$/next.config.js" />
     <entry file="file://$PROJECT_DIR$/server.js" />
     <entry file="file://$PROJECT_DIR$/Procfile" />
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="34" column="31" lean-forward="true" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/_app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
+        <state relative-caret-position="14">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
@@ -444,8 +470,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/_document.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="7" column="5" lean-forward="true" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+        <state relative-caret-position="236">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
         </state>
       </provider>
     </entry>
