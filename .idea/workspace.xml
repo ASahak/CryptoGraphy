@@ -2,42 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9cfb4be-27ed-40fd-a7f1-494d503d518a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/dist/BUILD_ID" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/build-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/export-marker.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/prerender-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/react-loadable-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/react-loadable-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/init-server.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/init-server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/on-error-server.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/on-error-server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/pages-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/ssr-module-cache.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/ssr-module-cache.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/_app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/_document.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/_error.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/_errors/404.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/register.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/static/2i4UT4KBnHy3C8vckHjaS/pages/reset-password.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/_buildManifest.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/_app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/_error.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/login.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/register.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/2i4UT4KBnHy3C8vckHjaS/pages/reset-password.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/484bcb1e.6969fbe37fc15cbfda7a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/49325e24edd17e9f47e0004647962d95cc3b653d.3fd6e940399b6b786780.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/7e9cbcf7a1775b6508fbf4cfca347f018bbd3937.01e10315aba7f4cdec2c.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/8673774c.11b3be935b8df6869a06.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/commons.d943d8fd351b3395bc1b.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/ff239f9d.bbcff2a7898e555b8638.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/chunks/framework.5a6fd18fd7776ae00af7.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/runtime/main-19a16e2bade3197235c7.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/runtime/polyfills-ca767adcfe74e5592607.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/static/runtime/webpack-91b117697e716c22a78b.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Chat-Messages.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Chat-Messages.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/elements/PrivateMessageContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/elements/PrivateMessageContent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/UI/User-Image.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/UI/User-Image.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -50,11 +17,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+            <state relative-caret-position="208">
+              <caret line="16" column="31" lean-forward="true" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/login.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/register.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="30" column="36" lean-forward="true" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/components/elements/PrivateMessageContent.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="280" column="4" lean-forward="true" selection-start-line="280" selection-start-column="4" selection-end-line="280" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/components/Messages.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3248" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/components/Chat-Messages.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="98" column="36" lean-forward="true" selection-start-line="98" selection-start-column="36" selection-end-line="98" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -62,7 +68,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/_app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14">
+            <state relative-caret-position="70">
               <caret line="5" selection-start-line="5" selection-end-line="5" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -84,8 +90,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>__ADD_MESSAGE</find>
-      <find>__SET_ACTIVE_USER_MESSAGES</find>
       <find>unsubscribeUsers</find>
       <find>isRemoving</find>
       <find>message-</find>
@@ -114,6 +118,8 @@
       <find>react-redux</find>
       <find>favicon.ico</find>
       <find>path=</find>
+      <find>LN</find>
+      <find>get LN () {</find>
     </findStrings>
     <replaceStrings>
       <replace>__CHANGE_STATUS_IS_LOADING</replace>
@@ -126,7 +132,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/store/reducers/auth.js" />
         <option value="$PROJECT_DIR$/components/shared/helpers/Bus.js" />
         <option value="$PROJECT_DIR$/components/shared/UI/Button.jsx" />
         <option value="$PROJECT_DIR$/components/Skeleton/index.jsx" />
@@ -164,9 +169,7 @@
         <option value="$PROJECT_DIR$/store/actions/index.js" />
         <option value="$PROJECT_DIR$/store/types/index.js" />
         <option value="$PROJECT_DIR$/store/reducers/chat.js" />
-        <option value="$PROJECT_DIR$/components/elements/PrivateMessageContent.jsx" />
         <option value="$PROJECT_DIR$/components/shared/helpers/global-styles.js" />
-        <option value="$PROJECT_DIR$/components/Chat-Messages.jsx" />
         <option value="$PROJECT_DIR$/components/Chat-Users.jsx" />
         <option value="$PROJECT_DIR$/components/elements/TextAreaMessage.jsx" />
         <option value="$PROJECT_DIR$/components/shared/UI/Alert.jsx" />
@@ -177,6 +180,9 @@
         <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/pages/_document.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/components/elements/PrivateMessageContent.jsx" />
+        <option value="$PROJECT_DIR$/components/shared/UI/User-Image.jsx" />
+        <option value="$PROJECT_DIR$/components/Chat-Messages.jsx" />
       </list>
     </option>
   </component>
@@ -203,6 +209,17 @@
               <item name="CryptoGraphy" type="b2602c69:ProjectViewProjectNode" />
               <item name="CryptoGraphy" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CryptoGraphy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CryptoGraphy" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="elements" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CryptoGraphy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CryptoGraphy" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CryptoGraphy" type="b2602c69:ProjectViewProjectNode" />
@@ -302,18 +319,18 @@
       <workItem from="1588310817926" duration="4576000" />
       <workItem from="1588403693324" duration="6951000" />
       <workItem from="1588416277177" duration="3097000" />
-      <workItem from="1588502265213" duration="692000" />
+      <workItem from="1588502265213" duration="3304000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="618793000" />
+    <option name="totallyTimeSpent" value="621405000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18374091" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18374091" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -327,7 +344,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.47733712" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50033045" side_tool="true" weight="0.2266289" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49966952" visible="true" weight="0.33994335" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49966952" visible="true" weight="0.3937677" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.3286119" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -410,13 +427,10 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/components/Icons/Modal.js" />
-    <entry file="file://$PROJECT_DIR$/components/shared/UI/index.js" />
     <entry file="file://$PROJECT_DIR$/store/reducers/index.js" />
     <entry file="file://$PROJECT_DIR$/components/shared/UI/Select.jsx" />
     <entry file="file://$PROJECT_DIR$/components/shared/UI/Modal.jsx" />
     <entry file="file://$PROJECT_DIR$/pages/index.js" />
-    <entry file="file://$PROJECT_DIR$/pages/login.js" />
     <entry file="file://$PROJECT_DIR$/pages/reset-password.js" />
     <entry file="file://$PROJECT_DIR$/libraries/Caesar.js" />
     <entry file="file://$PROJECT_DIR$/components/Icons/Logout.js" />
@@ -437,7 +451,6 @@
     <entry file="file://$PROJECT_DIR$/store/reselect/index.js" />
     <entry file="file://$PROJECT_DIR$/hooks/use-portal.jsx" />
     <entry file="file://$PROJECT_DIR$/components/shared/helpers/global-functions.js" />
-    <entry file="file://$PROJECT_DIR$/pages/register.js" />
     <entry file="file://$PROJECT_DIR$/components/elements/CommonRoom.jsx" />
     <entry file="file://$PROJECT_DIR$/components/Chat-Content.jsx" />
     <entry file="file://$PROJECT_DIR$/node_modules/firebase/index.d.ts" />
@@ -447,10 +460,7 @@
     <entry file="file://$PROJECT_DIR$/store/types/index.js" />
     <entry file="file://$PROJECT_DIR$/store/reducers/chat.js" />
     <entry file="file://$PROJECT_DIR$/store/index.js" />
-    <entry file="file://$PROJECT_DIR$/components/elements/PrivateMessageContent.jsx" />
-    <entry file="file://$PROJECT_DIR$/components/Messages.jsx" />
     <entry file="file://$PROJECT_DIR$/src/server/.babelrc" />
-    <entry file="file://$PROJECT_DIR$/components/Chat-Messages.jsx" />
     <entry file="file://$PROJECT_DIR$/store/saga/index.js" />
     <entry file="file://$PROJECT_DIR$/components/Chat-Users.jsx" />
     <entry file="file://$PROJECT_DIR$/src/server/index.js" />
@@ -458,16 +468,6 @@
     <entry file="file://$PROJECT_DIR$/next.config.js" />
     <entry file="file://$PROJECT_DIR$/server.js" />
     <entry file="file://$PROJECT_DIR$/Procfile" />
-    <entry file="file://$PROJECT_DIR$/pages/_app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/_document.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
@@ -475,10 +475,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/out/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="168" selection-start-column="168" selection-end-column="168" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/login.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/_app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+        <state relative-caret-position="208">
+          <caret line="16" column="31" lean-forward="true" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/login.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/register.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="30" column="36" lean-forward="true" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/elements/PrivateMessageContent.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="280" column="4" lean-forward="true" selection-start-line="280" selection-start-column="4" selection-end-line="280" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/Messages.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3248" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/Chat-Messages.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="98" column="36" lean-forward="true" selection-start-line="98" selection-start-column="36" selection-end-line="98" selection-end-column="36" />
         </state>
       </provider>
     </entry>

@@ -279,7 +279,7 @@ class PrivateMessageContent extends React.PureComponent{
         return this.props.activeUser ? this.props.activeUser.fullName.split(' ')[0].slice(0, 1).toUpperCase() : '';
     }
     get LN () {
-        return this.props.activeUser ? this.props.activeUser.fullName.split(' ')[1].slice(0, 1) || ''.toUpperCase() : '';
+        return this.props.activeUser ? this.props.activeUser.fullName.split(' ')[1]?.slice(0, 1) || ''.toUpperCase() : '';
     }
 
     render () {
